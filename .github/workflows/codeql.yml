@@ -18,7 +18,7 @@ on:
     # The branches below must be a subset of the branches above
     branches: [ "main" ]
   schedule:
-    - cron: '23 2 * * 4'
+    - cron: '25 11 * * 1'
 
 jobs:
   analyze:
@@ -48,8 +48,6 @@ jobs:
     - name: Checkout repository
       uses: actions/checkout@v3
 
-
-    
     # Initializes the CodeQL tools for scanning.
     - name: Initialize CodeQL
       uses: github/codeql-action/init@v2
@@ -66,7 +64,7 @@ jobs:
     # Autobuild attempts to build any compiled languages (C/C++, C#, Go, Java, or Swift).
     # If this step fails, then you should remove it and run the build manually (see below)
     #- name: Autobuild
-     # uses: github/codeql-action/autobuild@v2
+    # uses: github/codeql-action/autobuild@v2
 
     # ℹ️ Command-line programs to run using the OS shell.
     # 📚 See https://docs.github.com/en/actions/using-workflows/workflow-syntax-for-github-actions#jobsjob_idstepsrun
