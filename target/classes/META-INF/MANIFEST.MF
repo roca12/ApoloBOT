@@ -1,4 +1,6 @@
 Manifest-Version: 1.0
 Build-Jdk-Spec: 19
+Implementation-Title: apolobot
+Implementation-Version: 0.1
 Created-By: Maven Integration for Eclipse
 

@@ -1,1 +1,8 @@
-controller\handler\LessonMessageSender$1.class
+com/roca12/apolobot/model/Embed.class
+com/roca12/apolobot/controller/handler/LessonMessageSender$1.class
+com/roca12/apolobot/controller/handler/LessonMessageSender.class
+com/roca12/apolobot/ApolobotApplication.class
+com/roca12/apolobot/controller/handler/SlashBuilder.class
+com/roca12/apolobot/controller/handler/SlashListener.class
+com/roca12/apolobot/controller/handler/MessageListener.class
+com/roca12/apolobot/controller/AplMain.class
