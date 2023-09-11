@@ -14,6 +14,7 @@ import org.javacord.api.interaction.SlashCommand;
 import org.javacord.api.interaction.SlashCommandInteraction;
 
 import com.roca12.apolobot.model.Embed;
+import com.roca12.apolobot.model.dao.ReRunApoloDAO;
 
 public class SlashListener {
 
@@ -84,7 +85,15 @@ public class SlashListener {
 	}
 
 	public void showTest() {
-		slashCommandInteraction.createImmediateResponder().setContent("Todos los sistemas estan operativos!").respond();
+		ReRunApoloDAO rraDao= new ReRunApoloDAO();
+		try {
+			rraDao.createNewReRunByTest();
+			slashCommandInteraction.createImmediateResponder().setContent("Instancia DB corriendo y recibiendo solicitudes").
+			appendNewLine().append("Todos los sistemas estan operativos!").respond();
+		} catch (Exception e) {
+			slashCommandInteraction.createImmediateResponder().setContent(e.getMessage()).respond();
+			slashCommandInteraction.createImmediateResponder().setContent("Algun sistema esta fallando").respond();
+		}
 	}
 
 	public void showPing() {
