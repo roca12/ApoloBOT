@@ -1,6 +1,7 @@
 package com.roca12.apolobot.controller.handler;
 
 import java.time.LocalTime;
+
 import java.util.Set;
 
 import org.javacord.api.DiscordApi;
@@ -50,11 +51,11 @@ public class LessonMessageSender {
 						sendMessageLesson();
 
 						if (isProd) {
-							// cada 12 horas
-							Thread.sleep(1000 * 60 * 60 * 12);
+							// cada semana
+							Thread.sleep(1000 * 60 * 60 * 24*7);
 						} else {
-							// cada minuto
-							Thread.sleep(1000 * 60);
+							// cada hora
+							Thread.sleep(1000 * 60*60);
 						}
 						
 						// cada hora

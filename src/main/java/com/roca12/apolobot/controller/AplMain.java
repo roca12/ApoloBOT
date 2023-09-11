@@ -17,7 +17,7 @@ import com.roca12.apolobot.controller.handler.SlashListener;
 @SpringBootApplication
 public class AplMain {
 
-	boolean productionState = true;
+	boolean productionState = false;
 
 	String token;
 	DiscordApi api;

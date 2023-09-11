@@ -9,6 +9,7 @@ import org.javacord.api.DiscordApi;
 import org.javacord.api.entity.message.MessageFlag;
 import org.javacord.api.entity.message.component.ActionRow;
 import org.javacord.api.entity.message.component.Button;
+import org.javacord.api.entity.server.Server;
 import org.javacord.api.interaction.SlashCommand;
 import org.javacord.api.interaction.SlashCommandInteraction;
 
@@ -40,6 +41,11 @@ public class SlashListener {
 
 				switch (command) {
 
+				case "ayuda": {
+					showAyuda();
+					break;
+				}
+
 				case "ping": {
 
 					showPing();
@@ -56,18 +62,23 @@ public class SlashListener {
 					break;
 				}
 
-				case "ayuda": {
-					showAyuda();
+				case "entrenamiento": {
+					notImplementedYet();
+					break;
+				}
+
+				case "evento": {
+					notImplementedYet();
 					break;
 				}
 
 				default:
 					notExist();
 				}
-			}else {
+			} else {
 				notCoach();
 			}
-			
+
 		});
 
 	}
@@ -81,11 +92,11 @@ public class SlashListener {
 	}
 
 	public void showNumeroUsuarios() {
-		slashCommandInteraction.createImmediateResponder().setContent("Click on one of these Buttons!")
-				.addComponents(ActionRow.of(Button.success("success", "Send a message"),
-						Button.danger("danger", "Delete this message"),
-						Button.secondary("secondary", "Remind me after 5 minutes")))
-				.respond();
+		Set<Server> servers =api.getServers();
+		for (Server s : servers) {
+			String out = s.getName()+ " -> "+s.getMemberCount()+" users.";
+			slashCommandInteraction.createImmediateResponder().setContent(out).respond();
+		}
 	}
 
 	public void showAyuda() {
@@ -119,6 +130,23 @@ public class SlashListener {
 		slashCommandInteraction.createImmediateResponder().setContent("No tienes permisos de usar este comando")
 				.setFlags(MessageFlag.EPHEMERAL).respond();
 	}
+
+	public void notImplementedYet() {
+		slashCommandInteraction.createImmediateResponder().setContent("Este comando no ha sido implementando aun :(")
+				.addComponents(ActionRow.of(Button.success("success", "Send a message"),
+						Button.danger("danger", "Delete this message"),
+						Button.secondary("secondary", "Remind me after 5 minutes")))
+				.respond();
+	}
+
+	public void showButtons() {
+		slashCommandInteraction.createImmediateResponder().setContent("Click on one of these Buttons!")
+				.addComponents(ActionRow.of(Button.success("success", "Send a message"),
+						Button.danger("danger", "Delete this message"),
+						Button.secondary("secondary", "Remind me after 5 minutes")))
+				.respond();
+	}
+
 	public Properties getProp() {
 		return prop;
 	}
