@@ -12,7 +12,7 @@ import com.roca12.apolobot.controller.handler.LessonMessageSender;
 import com.roca12.apolobot.controller.handler.MessageListener;
 import com.roca12.apolobot.controller.handler.SlashBuilder;
 import com.roca12.apolobot.controller.handler.SlashListener;
-import com.roca12.apolobot.model.dao.GroceryItemDAO;
+//import com.roca12.apolobot.model.dao.GroceryItemDAO;
 import com.roca12.apolobot.model.dao.ReRunApoloDAO;
 
 public class AplMain {
@@ -69,11 +69,11 @@ public class AplMain {
 	}
 
 	private boolean loadAndCheckCriticals() {
-		System.out.println(System.getProperty("user.dir"));
+		//System.out.println(System.getProperty("user.dir"));
 		try {
 			InputStream r = new ClassPathResource("files/main.properties").getInputStream();
 			prop.load(r);
-			System.out.println("token " + prop.getProperty("apolo.test.token"));
+			//System.out.println("token " + prop.getProperty("apolo.test.token"));
 			if (productionState) {
 				System.out.println("Running in prod mode");
 				token = prop.getProperty("apolo.prod.token");
