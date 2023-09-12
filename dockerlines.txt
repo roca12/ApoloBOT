@@ -8,3 +8,5 @@ docker tag diegoroca12/apolobot diegoroca12/apolobot:latest
 docker tag diegoroca12/apolobot diegoroca12/apolobot:0.3
 // push all tags
 docker image push --all-tags diegoroca12/apolobot
+//run container with name remember change version
+docker run -d --name apolobot-java diegoroca12/apolobot:0.4

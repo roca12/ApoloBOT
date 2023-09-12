@@ -81,9 +81,12 @@ public class LessonMessageSender {
 		AllowedMentions allowedMentions = new AllowedMentionsBuilder().setMentionEveryoneAndHere(true).build();
 		
 		for (ServerTextChannel s : allChannels) {
+//			new MessageBuilder().setAllowedMentions(allowedMentions)
+//					.setContent("Recuerda que la clase es de 8 a 9 PM, los dias Lunes, Martes y Miercoles ")
+//					.append("@here").send(s);
 			new MessageBuilder().setAllowedMentions(allowedMentions)
-					.setContent("Recuerda que la clase es de 8 a 9 PM, los dias Lunes, Martes y Miercoles ")
-					.append("@here").send(s);
+			.setContent("Recuerda que la clase es de 8 a 9 PM, los dias Lunes, Martes y Miercoles ")
+			.send(s);
 		}
 
 		System.out.println("Enviando mensaje de recordatorio de clase " + LocalTime.now().toString());

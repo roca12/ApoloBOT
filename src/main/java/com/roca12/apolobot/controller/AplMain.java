@@ -17,7 +17,9 @@ import com.roca12.apolobot.model.dao.ReRunApoloDAO;
 
 public class AplMain {
 
+
 	private boolean productionState = false;
+
 
 	private String token;
 	private DiscordApi api;
