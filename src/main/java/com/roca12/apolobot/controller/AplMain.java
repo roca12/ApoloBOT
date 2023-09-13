@@ -1,37 +1,46 @@
 package com.roca12.apolobot.controller;
 
-
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Properties;
 
 import org.javacord.api.DiscordApi;
 import org.javacord.api.DiscordApiBuilder;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.core.io.ClassPathResource;
 
 import com.roca12.apolobot.controller.handler.LessonMessageSender;
 import com.roca12.apolobot.controller.handler.MessageListener;
 import com.roca12.apolobot.controller.handler.SlashBuilder;
 import com.roca12.apolobot.controller.handler.SlashListener;
-@SpringBootApplication
+//import com.roca12.apolobot.model.dao.GroceryItemDAO;
+import com.roca12.apolobot.model.dao.ReRunApoloDAO;
+
 public class AplMain {
 
-	boolean productionState = false;
 
-	String token;
-	DiscordApi api;
+	private boolean productionState = false;
 
-	SlashBuilder sb;
-	SlashListener sl;
-	MessageListener ml;
-	LessonMessageSender ms;
 
-	Properties prop = new Properties();
+	private String token;
+	private DiscordApi api;
 
+	private SlashBuilder sb;
+	private SlashListener sl;
+	private MessageListener ml;
+	private LessonMessageSender ms;
+
+	private Properties prop = new Properties();
 	
+	//private GroceryItemDAO giDao;
+	private ReRunApoloDAO rraDao;
 
-	public  void run() {
+	public AplMain() {
+		//giDao = new GroceryItemDAO();
+		rraDao = new ReRunApoloDAO();
+	}
+
+	public void run() {
+		
 		loadAndCheckCriticals();
 		System.out.println("Starting Apolo bot");
 		try {
@@ -62,11 +71,11 @@ public class AplMain {
 	}
 
 	private boolean loadAndCheckCriticals() {
-		System.out.println(System.getProperty("user.dir"));
+		//System.out.println(System.getProperty("user.dir"));
 		try {
 			InputStream r = new ClassPathResource("files/main.properties").getInputStream();
 			prop.load(r);
-			System.out.println("token " + prop.getProperty("apolo.test.token"));
+			//System.out.println("token " + prop.getProperty("apolo.test.token"));
 			if (productionState) {
 				System.out.println("Running in prod mode");
 				token = prop.getProperty("apolo.prod.token");
@@ -80,6 +89,8 @@ public class AplMain {
 			sl = new SlashListener(api);
 			ml = new MessageListener(api);
 			ms = new LessonMessageSender(api, productionState);
+			
+			testMongoDB(); 
 
 			return true;
 
@@ -88,6 +99,8 @@ public class AplMain {
 			System.err.println("main.properties error");
 			return false;
 		}
+		
+		
 
 	}
 
@@ -103,5 +116,40 @@ public class AplMain {
 			return true;
 		}
 	}
+	
+	private void testMongoDB() {
+		rraDao.createNewReRun();
+	}
+
+//	private void testMongoDB() {
+//
+//
+//		giDao.createGroceryItems();
+//
+//		System.out.println("\n----------------SHOW ALL GROCERY ITEMS---------------------------\n");
+//
+//		giDao.showAllGroceryItems();
+//
+//		System.out.println("\n--------------GET ITEM BY NAME-----------------------------------\n");
+//
+//		giDao.getGroceryItemByName("Whole Wheat Biscuit");
+//
+//		System.out.println("\n-----------UPDATE CATEGORY NAME OF SNACKS CATEGORY----------------\n");
+//
+//		giDao.updateCategoryName();
+//
+//		System.out.println("\n----------DELETE A GROCERY ITEM----------------------------------\n");
+//
+//		giDao.deleteGroceryItem("Kodo Millet");
+//
+//		System.out.println("\n------------FINAL COUNT OF GROCERY ITEMS-------------------------\n");
+//
+//		giDao.findCountOfGroceryItems();
+//
+//		System.out.println("\n-------------------THANK YOU---------------------------");
+//
+//	}
+	
+	
 
 }

@@ -1,7 +1,11 @@
 package com.roca12.apolobot.controller.handler;
 
+import java.time.DayOfWeek;
+import java.time.LocalDateTime;
 import java.time.LocalTime;
-
+import java.time.Month;
+import java.time.ZoneId;
+import java.util.Arrays;
 import java.util.Set;
 
 import org.javacord.api.DiscordApi;
@@ -19,13 +23,11 @@ public class LessonMessageSender {
 		this.api = api;
 		this.isProd = isProd;
 	}
-	
+
 	public LessonMessageSender() {
 		// TODO Auto-generated constructor stub
 	}
-	
-	
-	
+
 	public DiscordApi getApi() {
 		return api;
 	}
@@ -43,53 +45,66 @@ public class LessonMessageSender {
 	}
 
 	public void setTimer() {
+		Month[] months = { Month.FEBRUARY, Month.MARCH, Month.MAY, Month.JUNE, Month.AUGUST, Month.SEPTEMBER,
+				Month.OCTOBER, Month.NOVEMBER };
 		Thread t = new Thread() {
 			@Override
 			public void run() {
 				while (true) {
-					try {
-						sendMessageLesson();
-
+					LocalDateTime now = LocalDateTime.now();
+					now.atZone(ZoneId.of("America/Bogota"));
+					if (Arrays.binarySearch(months, now.getMonth()) != -1) {
 						if (isProd) {
-							// cada semana
-							Thread.sleep(1000 * 60 * 60 * 24*7);
-						} else {
-							// cada hora
-							Thread.sleep(1000 * 60*60);
-						}
-						
-						// cada hora
-						// Thread.sleep(1000*60*60);
+							if (now.getDayOfWeek().equals(DayOfWeek.MONDAY)) {
+								if (now.getHour() == 12 && now.getMinute() == 00 && now.getSecond() == 00) {
+									sendMessageLesson();
+									try {
+										Thread.sleep(2000);
+									} catch (InterruptedException e) {
+										// TODO Auto-generated catch block
+										e.printStackTrace();
+									}
+								}
 
-						// cada dia
-						// Thread.sleep(1000*60*60*24);
-					} catch (InterruptedException ie) {
+							}
+						} else {
+							if (now.getHour() == 12 && now.getMinute() == 00 && now.getSecond() == 00) {
+								sendMessageLesson();
+								try {
+									Thread.sleep(1000 * 60 * 5);
+								} catch (InterruptedException e) {
+									e.printStackTrace();
+								}
+							}
+						}
 					}
 				}
 			}
 		};
 		t.start();
+
 	}
 
-
 	public void sendMessageLesson() {
-		//falta guardar archivo de fechas y horas
-		//averiguar si puede ser un properties
-		
+		// falta guardar archivo de fechas y horas
+		// averiguar si puede ser un properties
+
 		Set<ServerTextChannel> allChannels = api.getServerTextChannelsByName("general");
 
 		AllowedMentions allowedMentions = new AllowedMentionsBuilder().setMentionEveryoneAndHere(true).build();
-		
+
 		for (ServerTextChannel s : allChannels) {
+//			new MessageBuilder().setAllowedMentions(allowedMentions)
+//					.setContent("Recuerda que la clase es de 8 a 9 PM, los dias Lunes, Martes y Miercoles ")
+//					.append("@here").send(s);
 			new MessageBuilder().setAllowedMentions(allowedMentions)
-					.setContent("Recuerda que la clase es de 8 a 9 PM, los dias Lunes, Martes y Miercoles ")
-					.append("@here").send(s);
+					.setContent(
+							"Recuerda que nuestros entrenamientos son de 8 a 9 PM, los dias Lunes, Martes y Miercoles ")
+					.send(s);
 		}
 
 		System.out.println("Enviando mensaje de recordatorio de clase " + LocalTime.now().toString());
 
 	}
-	
-	
 
 }
