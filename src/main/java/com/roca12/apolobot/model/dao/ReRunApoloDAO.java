@@ -3,13 +3,11 @@ package com.roca12.apolobot.model.dao;
 import java.util.Date;
 
 
-import org.springframework.stereotype.Controller;
-
 import com.roca12.apolobot.controller.ApplicationContextHolder;
 import com.roca12.apolobot.model.ReRunApolo;
 import com.roca12.apolobot.repository.ReRunApoloRepository;
 
-@Controller
+
 public class ReRunApoloDAO {
 
 	private ReRunApoloRepository reRunRepo;

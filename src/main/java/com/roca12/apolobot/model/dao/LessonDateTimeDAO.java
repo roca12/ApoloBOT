@@ -8,7 +8,7 @@ import com.roca12.apolobot.controller.ApplicationContextHolder;
 import com.roca12.apolobot.model.LessonDateTime;
 import com.roca12.apolobot.repository.LessonDateTimeRepository;
 
-@Controller
+
 public class LessonDateTimeDAO {
 
 	private LessonDateTimeRepository lessonRepo;

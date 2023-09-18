@@ -12,13 +12,14 @@ import com.roca12.apolobot.controller.handler.LessonMessageSender;
 import com.roca12.apolobot.controller.handler.MessageListener;
 import com.roca12.apolobot.controller.handler.SlashBuilder;
 import com.roca12.apolobot.controller.handler.SlashListener;
-//import com.roca12.apolobot.model.dao.GroceryItemDAO;
+import com.roca12.apolobot.model.dao.LessonDateTimeDAO;
 import com.roca12.apolobot.model.dao.ReRunApoloDAO;
 
 public class AplMain {
 
 
-	private boolean productionState = false;
+	private final boolean PRODUCTION_STATE = true;
+	private final String VERSION="0.5";
 
 
 	private String token;
@@ -31,18 +32,18 @@ public class AplMain {
 
 	private Properties prop = new Properties();
 	
-	//private GroceryItemDAO giDao;
 	private ReRunApoloDAO rraDao;
+	private LessonDateTimeDAO ldtDao;
 
 	public AplMain() {
 		//giDao = new GroceryItemDAO();
-		rraDao = new ReRunApoloDAO();
+		//rraDao = new ReRunApoloDAO();
 	}
 
 	public void run() {
-		
+	
 		loadAndCheckCriticals();
-		System.out.println("Starting Apolo bot");
+		System.out.println("Starting Apolo bot in version "+VERSION);
 		try {
 			if (checkReqs()) {
 
@@ -76,7 +77,7 @@ public class AplMain {
 			InputStream r = new ClassPathResource("files/main.properties").getInputStream();
 			prop.load(r);
 			//System.out.println("token " + prop.getProperty("apolo.test.token"));
-			if (productionState) {
+			if (PRODUCTION_STATE) {
 				System.out.println("Running in prod mode");
 				token = prop.getProperty("apolo.prod.token");
 			} else {
@@ -88,8 +89,11 @@ public class AplMain {
 			sb = new SlashBuilder(api);
 			sl = new SlashListener(api);
 			ml = new MessageListener(api);
-			ms = new LessonMessageSender(api, productionState);
+			ms = new LessonMessageSender(api, PRODUCTION_STATE);
 			
+			rraDao = new ReRunApoloDAO();
+			ldtDao= new LessonDateTimeDAO();
+
 			testMongoDB(); 
 
 			return true;
