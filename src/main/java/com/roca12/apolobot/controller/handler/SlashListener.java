@@ -14,7 +14,7 @@ import org.javacord.api.interaction.SlashCommand;
 import org.javacord.api.interaction.SlashCommandInteraction;
 
 import com.roca12.apolobot.model.Embed;
-import com.roca12.apolobot.model.dao.ReRunApoloDAO;
+import com.roca12.apolobot.service.ReRunApoloService;
 
 public class SlashListener {
 
@@ -85,7 +85,7 @@ public class SlashListener {
 	}
 
 	public void showTest() {
-		ReRunApoloDAO rraDao= new ReRunApoloDAO();
+		ReRunApoloService rraDao= new ReRunApoloService();
 		try {
 			rraDao.createNewReRunByTest();
 			slashCommandInteraction.createImmediateResponder().setContent("Instancia DB corriendo y recibiendo solicitudes").
