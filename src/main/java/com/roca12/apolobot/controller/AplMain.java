@@ -12,8 +12,7 @@ import com.roca12.apolobot.controller.handler.LessonMessageSender;
 import com.roca12.apolobot.controller.handler.MessageListener;
 import com.roca12.apolobot.controller.handler.SlashBuilder;
 import com.roca12.apolobot.controller.handler.SlashListener;
-//import com.roca12.apolobot.model.dao.GroceryItemDAO;
-import com.roca12.apolobot.model.dao.ReRunApoloDAO;
+import com.roca12.apolobot.service.ReRunApoloService;
 
 public class AplMain {
 
@@ -32,11 +31,11 @@ public class AplMain {
 	private Properties prop = new Properties();
 	
 	//private GroceryItemDAO giDao;
-	private ReRunApoloDAO rraDao;
+	private ReRunApoloService rraDao;
 
 	public AplMain() {
 		//giDao = new GroceryItemDAO();
-		rraDao = new ReRunApoloDAO();
+		rraDao = new ReRunApoloService();
 	}
 
 	public void run() {

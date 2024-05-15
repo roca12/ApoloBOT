@@ -1,4 +1,4 @@
-package com.roca12.apolobot.model.dao;
+package com.roca12.apolobot.service;
 
 import java.util.ArrayList;
 
@@ -9,12 +9,12 @@ import com.roca12.apolobot.model.LessonDateTime;
 import com.roca12.apolobot.repository.LessonDateTimeRepository;
 
 @Controller
-public class LessonDateTimeDAO {
+public class LessonDateTimeService {
 
 	private LessonDateTimeRepository lessonRepo;
 	private ArrayList<LessonDateTime> all = new ArrayList<>();
 
-	public LessonDateTimeDAO() {
+	public LessonDateTimeService() {
 		lessonRepo = ApplicationContextHolder.getContext().getBean(LessonDateTimeRepository.class);
 	}
 
