@@ -17,7 +17,7 @@ import com.roca12.apolobot.service.ReRunApoloService;
 public class AplMain {
 
 
-	private boolean productionState = false;
+	private final boolean PRODUCTION_STATE = false;
 
 
 	private String token;
@@ -75,7 +75,7 @@ public class AplMain {
 			InputStream r = new ClassPathResource("files/main.properties").getInputStream();
 			prop.load(r);
 			//System.out.println("token " + prop.getProperty("apolo.test.token"));
-			if (productionState) {
+			if (PRODUCTION_STATE) {
 				System.out.println("Running in prod mode");
 				token = prop.getProperty("apolo.prod.token");
 			} else {
@@ -87,7 +87,7 @@ public class AplMain {
 			sb = new SlashBuilder(api);
 			sl = new SlashListener(api);
 			ml = new MessageListener(api);
-			ms = new LessonMessageSender(api, productionState);
+			ms = new LessonMessageSender(api, PRODUCTION_STATE);
 			
 			testMongoDB(); 
 
