@@ -38,7 +38,7 @@ public class SlashListener {
 			String author = slashCommandInteraction.getUser().getName();
 			System.out.println(author + " -> " + command);
 
-			if (author.equals("roca12")) {
+			//if (author.equals("roca12")) {
 
 				switch (command) {
 
@@ -76,9 +76,9 @@ public class SlashListener {
 				default:
 					notExist();
 				}
-			} else {
-				notCoach();
-			}
+//			} else {
+//				notCoach();
+//			}
 
 		});
 
