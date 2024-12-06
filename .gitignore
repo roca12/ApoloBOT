@@ -34,3 +34,4 @@ build/
 src/main/resources/files/main.properties
 src/main/resources/application.properties
 target
+/bin

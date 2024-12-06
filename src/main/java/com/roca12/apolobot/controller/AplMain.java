@@ -82,10 +82,12 @@ public class AplMain {
 				System.out.println("Running in dev test mode");
 				token = prop.getProperty("apolo.test.token");
 			}
-
+			
+			
 			api = new DiscordApiBuilder().setToken(token).setAllIntents().login().join();
 			sb = new SlashBuilder(api);
 			sl = new SlashListener(api);
+			sl.setTraductorApiKey(prop.getProperty("apolo.traductor.apikey"));
 			ml = new MessageListener(api);
 			ms = new LessonMessageSender(api, PRODUCTION_STATE);
 			

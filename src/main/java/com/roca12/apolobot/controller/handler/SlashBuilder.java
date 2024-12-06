@@ -11,16 +11,17 @@ import org.javacord.api.interaction.SlashCommandBuilder;
 import org.javacord.api.interaction.SlashCommandOption;
 import org.javacord.api.interaction.SlashCommandOptionType;
 
+
 public class SlashBuilder {
-	
+
 	private DiscordApi api;
-	
+
 	private Set<SlashCommandBuilder> builders;
-	
+
 	private Properties prop = new Properties();
 
 	public SlashBuilder(DiscordApi api) {
-		this.api=api;
+		this.api = api;
 		builders = new HashSet<>();
 	}
 
@@ -55,6 +56,12 @@ public class SlashBuilder {
 								"Actualiza un evento por ID"),
 						SlashCommandOption.createWithOptions(SlashCommandOptionType.SUB_COMMAND, "Listar",
 								"Lista todos los eventos"))));
+
+		builders.add(new SlashCommandBuilder().setName("traducir")
+				.setDescription("Traduce un texto desde cualquier idioma al español.")
+				.addOption(SlashCommandOption.createStringOption("text",
+						"El texto que deseas traducir.", true 
+				)));
 
 		return builders;
 	}
