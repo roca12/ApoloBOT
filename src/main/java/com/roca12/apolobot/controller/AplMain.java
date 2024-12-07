@@ -19,7 +19,6 @@ public class AplMain {
 
 	private final boolean PRODUCTION_STATE = false;
 
-
 	private String token;
 	private DiscordApi api;
 

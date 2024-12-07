@@ -36,17 +36,27 @@ public class MessageListener implements MessageCreateListener {
 
 	@Override
 	public void onMessageCreate(MessageCreateEvent event) {
-		Message message = event.getMessage();
-		String msg = message.getContent();
-		String autor = message.getAuthor().getDisplayName();
-		if (checkDeleteables(msg)) {
-			String alerta = "Cuidado con ese vocabulario (" + autor + ")";
-			System.out.println(autor + " -> esta escribiendo malas palabras");
-			event.getChannel().sendMessage(alerta);
 
-			// aprender a eliminar un mensaje
-		}
+	    if (event.getMessageAuthor().isBotUser()) {
+	        return;
+	    }
+
+	    Message message = event.getMessage();
+	    String msg = message.getContent(); 
+	    String autor = message.getAuthor().getDisplayName();
+
+
+	    if (checkDeleteables(msg)) {
+	        String alerta = "⚠️ Cuidado con ese vocabulario, " + autor + ".";
+	        System.out.println(autor + " -> está escribiendo malas palabras.");
+	        event.getChannel().sendMessage(alerta);
+	        message.delete().exceptionally(e -> {
+	            System.out.println("No se pudo eliminar el mensaje: " + e.getMessage());
+	            return null;
+	        });;
+	    }
 	}
+	
 
 	private void loadBadWords() {
 		try {		
