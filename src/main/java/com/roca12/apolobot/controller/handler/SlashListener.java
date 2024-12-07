@@ -1,6 +1,11 @@
 package com.roca12.apolobot.controller.handler;
 
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.ArrayList;
 import java.util.Properties;
+import java.util.Scanner;
 import java.util.Set;
 import java.util.concurrent.ExecutionException;
 
@@ -12,6 +17,7 @@ import org.javacord.api.entity.message.component.Button;
 import org.javacord.api.entity.server.Server;
 import org.javacord.api.interaction.SlashCommand;
 import org.javacord.api.interaction.SlashCommandInteraction;
+import org.springframework.core.io.ClassPathResource;
 
 import com.google.cloud.translate.Translate;
 import com.google.cloud.translate.TranslateOptions;
@@ -31,9 +37,17 @@ public class SlashListener {
 	private DiscordApi api;
 	
 	private String traductorApiKey;
+	
+
+	private ArrayList<String> badWords;
+	
+	private Scanner sc;
 
 	public SlashListener(DiscordApi api) {
+		
 		this.api = api;
+		badWords = new ArrayList<>();
+		loadBadWords();
 	}
 
 	public void handleSlashComms() {
@@ -80,8 +94,8 @@ public class SlashListener {
 				}
 				
 				case "traducir":{
-					 String text = slashCommandInteraction.getArguments().get(0).getStringValue().orElse("");
-					traducir(text);
+					 
+					traducir();
 					break;
 				}
 
@@ -98,7 +112,12 @@ public class SlashListener {
 	
 	//TODO: probar variables de entorno
 	@SuppressWarnings("deprecation")
-	public void traducir(String texto) {
+	public void traducir() {
+		String texto = slashCommandInteraction.getArguments().get(0).getStringValue().orElse("");
+		if(checkDeleteables(texto)) {
+			slashCommandInteraction.createImmediateResponder().setContent("¡**").respond();
+			return;
+		}
         Translate translate = TranslateOptions.newBuilder()
                 .setApiKey(traductorApiKey)
                 .build()
@@ -112,6 +131,8 @@ public class SlashListener {
             texto,
             Translate.TranslateOption.targetLanguage(targetLanguage)
         );
+        String traduccion = translation.getTranslatedText();
+        
         slashCommandInteraction.createImmediateResponder().setContent(translation.getTranslatedText()).respond();
 	}
 	
@@ -187,6 +208,40 @@ public class SlashListener {
 						Button.danger("danger", "Delete this message"),
 						Button.secondary("secondary", "Remind me after 5 minutes")))
 				.respond();
+	}
+	
+	private void loadBadWords() {
+		try {		
+			InputStream r = new ClassPathResource("files/badwords.txt").getInputStream();
+			sc = new Scanner(r);
+			while (sc.hasNext()) {
+				badWords.add(sc.nextLine().toLowerCase());
+			}
+
+		} catch (FileNotFoundException e) {
+			System.out.println("File badwords.txt not found");
+			e.printStackTrace();
+			System.exit(0);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} 
+
+	}
+	
+
+
+	public boolean checkDeleteables(String msg) {
+		String[] words = msg.split(" ");
+		for (String word : words) {
+			if (badWords.contains(word)) {
+				return true;
+			} else {
+				continue;
+			}
+		}
+		return false;
+
 	}
 
 	public Properties getProp() {
