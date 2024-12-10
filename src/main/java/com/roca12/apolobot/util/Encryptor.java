@@ -17,7 +17,7 @@ public class Encryptor {
 
 	private final static String algoritmo = "AES";
 
-	private final static String tipoCifrado = "AES/CBC/PKCS5Padding";
+	private final static String tipoCifrado = "AES/GCM/NoPadding";
 
 	public static String encrypt(String llave, String iv, String texto) {
 		Cipher cipher = null;
@@ -28,9 +28,9 @@ public class Encryptor {
 		}
 
 		SecretKeySpec secretKeySpec = new SecretKeySpec(llave.getBytes(), algoritmo);
-		IvParameterSpec ivParameterSpec = new IvParameterSpec(iv.getBytes());
+		GCMParameterSpec gcmParameterSpec = new GCMParameterSpec(128, iv.getBytes());
 		try {
-			cipher.init(Cipher.ENCRYPT_MODE, secretKeySpec, ivParameterSpec);
+			cipher.init(Cipher.ENCRYPT_MODE, secretKeySpec, gcmParameterSpec);
 		} catch (InvalidKeyException | InvalidAlgorithmParameterException e) {
 			e.printStackTrace();
 		}
@@ -54,10 +54,10 @@ public class Encryptor {
 		}
 
 		SecretKeySpec secretKeySpec = new SecretKeySpec(llave.getBytes(), algoritmo);
-		IvParameterSpec ivParameterSpec = new IvParameterSpec(iv.getBytes());
+		GCMParameterSpec gcmParameterSpec = new GCMParameterSpec(128, iv.getBytes());
 		byte[] enc = decodeBase64(encrypted);
 		try {
-			cipher.init(Cipher.DECRYPT_MODE, secretKeySpec, ivParameterSpec);
+			cipher.init(Cipher.DECRYPT_MODE, secretKeySpec, gcmParameterSpec);
 		} catch (InvalidKeyException | InvalidAlgorithmParameterException e) {
 
 			e.printStackTrace();
