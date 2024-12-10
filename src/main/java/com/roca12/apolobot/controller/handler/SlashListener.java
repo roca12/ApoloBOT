@@ -1,17 +1,22 @@
 package com.roca12.apolobot.controller.handler;
 
+import java.io.IOException;
+import java.util.Optional;
 import java.util.Properties;
 import java.util.Set;
 import java.util.concurrent.ExecutionException;
 
+import org.apache.pdfbox.pdmodel.PDDocument;
+import org.apache.pdfbox.text.PDFTextStripper;
 import org.javacord.api.DiscordApi;
-
+import org.javacord.api.entity.Attachment;
 import org.javacord.api.entity.message.MessageFlag;
 import org.javacord.api.entity.message.component.ActionRow;
 import org.javacord.api.entity.message.component.Button;
 import org.javacord.api.entity.server.Server;
 import org.javacord.api.interaction.SlashCommand;
 import org.javacord.api.interaction.SlashCommandInteraction;
+import org.javacord.api.interaction.SlashCommandInteractionOption;
 
 import com.google.cloud.translate.Translate;
 import com.google.cloud.translate.TranslateOptions;
@@ -84,6 +89,10 @@ public class SlashListener {
 					traducir(text);
 					break;
 				}
+				
+				case "traducirpdf":{
+					break;
+				}
 
 				default:
 					notExist();
@@ -115,7 +124,29 @@ public class SlashListener {
         slashCommandInteraction.createImmediateResponder().setContent(translation.getTranslatedText()).respond();
 	}
 	
-	
+	public void traducirpdf() {
+		Optional<SlashCommandInteractionOption> archivo = slashCommandInteraction.getOptionByName("archivo");
+		if (archivo.isPresent() && archivo.get().getAttachmentValue().isPresent()) {
+			Attachment attachment = archivo.get().getAttachmentValue().get();
+			if(attachment.getFileName().endsWith(".pdf")) {
+				try {
+				PDDocument document = PDDocument.load(attachment.asInputStream());
+
+	         
+	            PDFTextStripper pdfStripper = new PDFTextStripper();
+	            
+					String text = pdfStripper.getText(document);
+					traducir(text);
+				} catch (IOException e) {
+					slashCommandInteraction.createImmediateResponder().setContent("Error al leer el pdf");
+				}
+
+			}else {
+				slashCommandInteraction.createImmediateResponder().setContent("El archivo subido debe de ser un pdf. ");
+				return;
+			}
+		}
+	}
 
 	public void showTest() {
 		ReRunApoloService rraDao= new ReRunApoloService();

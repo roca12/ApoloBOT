@@ -62,6 +62,11 @@ public class SlashBuilder {
 				.addOption(SlashCommandOption.createStringOption("text",
 						"El texto que deseas traducir.", true 
 				)));
+		
+		builders.add(new SlashCommandBuilder()
+				.setName("traducirpdf")
+				.setDescription("Traduce un pdf al español.")
+				.addOption(SlashCommandOption.createAttachmentOption("archivo", "Archivo pdf que se va a traducir", true)));
 
 		return builders;
 	}
