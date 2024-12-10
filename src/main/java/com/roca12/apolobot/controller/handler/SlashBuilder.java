@@ -5,6 +5,7 @@ import java.util.*;
 import org.javacord.api.DiscordApi;
 import org.javacord.api.interaction.*;
 
+
 public class SlashBuilder {
 
     private DiscordApi api;
@@ -61,6 +62,12 @@ public class SlashBuilder {
                 new SlashCommandBuilder().setName("teamo")
                         .setDescription("Demuestra tu amor por el bot :D")
         );
+      
+        builders.add(new SlashCommandBuilder().setName("traducir")
+          .setDescription("Traduce un texto desde cualquier idioma al español.")
+          .addOption(SlashCommandOption.createStringOption("text",
+              "El texto que deseas traducir.", true 
+         )));
 
         builders.add(SlashCommand.with("evento",
                 "Administra eventos futuros, tendra un recordatorio un dia antes y una hora antes",
@@ -100,4 +107,5 @@ public class SlashBuilder {
     public void setApi(DiscordApi api) {
         this.api = api;
     }
+
 }

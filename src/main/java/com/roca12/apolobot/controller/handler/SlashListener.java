@@ -21,8 +21,12 @@ import org.javacord.api.entity.server.Server;
 import org.javacord.api.interaction.SlashCommand;
 import org.javacord.api.interaction.SlashCommandInteraction;
 
+import com.google.cloud.translate.Translate;
+import com.google.cloud.translate.TranslateOptions;
+import com.google.cloud.translate.Translation;
 import com.roca12.apolobot.model.Embed;
 import com.roca12.apolobot.service.ReRunApoloService;
+
 
 public class SlashListener {
 
@@ -33,6 +37,8 @@ public class SlashListener {
     private Embed embed;
 
     private DiscordApi api;
+	
+	  private String traductorApiKey;
 
     public SlashListener(DiscordApi api) {
         this.api = api;
@@ -83,6 +89,11 @@ public class SlashListener {
                     iLoveYou();
                     break;
                 }
+                case "traducir":{
+                   String text = slashCommandInteraction.getArguments().get(0).getStringValue().orElse("");
+                  traducir(text);
+                  break;
+                }
 
                 default:
                     notExist();
@@ -90,9 +101,27 @@ public class SlashListener {
 //			} else {
 //				notCoach();
 //			}
-
         });
 
+    }
+  
+    //TODO: probar variables de entorno
+    @SuppressWarnings("deprecation")
+    public void traducir(String texto) {
+          Translate translate = TranslateOptions.newBuilder()
+                  .setApiKey(traductorApiKey)
+                  .build()
+                  .getService();
+
+
+          String targetLanguage = "es";
+
+
+          Translation translation = translate.translate(
+              texto,
+              Translate.TranslateOption.targetLanguage(targetLanguage)
+          );
+          slashCommandInteraction.createImmediateResponder().setContent(translation.getTranslatedText()).respond();
     }
 
     public void showTest() {
@@ -253,5 +282,15 @@ public class SlashListener {
     public void setApi(DiscordApi api) {
         this.api = api;
     }
+
+
+	public String getTraductorApiKey() {
+		return traductorApiKey;
+	}
+
+	public void setTraductorApiKey(String traductorApiKey) {
+		this.traductorApiKey = traductorApiKey;
+	}
+	
 
 }

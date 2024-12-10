@@ -15,6 +15,8 @@ import org.javacord.api.listener.message.MessageCreateListener;
 import org.springframework.core.io.ClassPathResource;
 
 
+
+
 public class MessageListener implements MessageCreateListener {
 	
 	private DiscordApi api;
@@ -64,6 +66,8 @@ public class MessageListener implements MessageCreateListener {
 		} 
 
 	}
+	
+
 
 	public boolean checkDeleteables(String msg) {
 		String[] words = msg.split(" ");
@@ -77,6 +81,7 @@ public class MessageListener implements MessageCreateListener {
 		return false;
 
 	}
+	
 
 	public ArrayList<String> getBadWords() {
 		return badWords;
