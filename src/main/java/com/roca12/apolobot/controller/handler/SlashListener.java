@@ -11,20 +11,29 @@ import java.util.Properties;
 import java.util.Set;
 import java.util.concurrent.ExecutionException;
 
+import com.roca12.apolobot.model.Training;
+import com.roca12.apolobot.service.TrainingService;
 import com.roca12.apolobot.util.ILoveResponses;
 import org.javacord.api.DiscordApi;
 
 import org.javacord.api.entity.message.MessageFlag;
 import org.javacord.api.entity.message.component.ActionRow;
 import org.javacord.api.entity.message.component.Button;
+import org.javacord.api.entity.message.mention.AllowedMentions;
+import org.javacord.api.entity.message.mention.AllowedMentionsBuilder;
 import org.javacord.api.entity.server.Server;
 import org.javacord.api.interaction.SlashCommand;
 import org.javacord.api.interaction.SlashCommandInteraction;
 
 import com.roca12.apolobot.model.Embed;
 import com.roca12.apolobot.service.ReRunApoloService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Controller;
 
 public class SlashListener {
+
+    private TrainingService trainingService;
 
     private SlashCommandInteraction slashCommandInteraction;
 
@@ -36,6 +45,7 @@ public class SlashListener {
 
     public SlashListener(DiscordApi api) {
         this.api = api;
+        trainingService = new TrainingService();
     }
 
     public void handleSlashComms() {
@@ -116,7 +126,7 @@ public class SlashListener {
     }
 
     public void showTraining() {
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm");
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH");
 
         String subCommandName = slashCommandInteraction.getOptionByName("anunciar").map(option -> "anunciar")
                 .or(() -> slashCommandInteraction.getOptionByName("cancelar").map(option -> "cancelar"))
@@ -126,40 +136,64 @@ public class SlashListener {
         LocalDateTime dateTime;
         if (fecha.equalsIgnoreCase("mañana")) {
             dateTime = LocalDateTime.now().plusDays(1);
-            dateTime = dateTime.truncatedTo(ChronoUnit.MINUTES);
+            dateTime = dateTime.truncatedTo(ChronoUnit.HOURS);
         } else if (fecha.equalsIgnoreCase("pasado")) {
             dateTime = LocalDateTime.now().plusDays(2);
-            dateTime = dateTime.truncatedTo(ChronoUnit.MINUTES);
+            dateTime = dateTime.truncatedTo(ChronoUnit.HOURS);
         } else if (fecha.equalsIgnoreCase("semana")) {
             dateTime = LocalDateTime.now().plusDays(7);
-            dateTime = dateTime.truncatedTo(ChronoUnit.MINUTES);
+            dateTime = dateTime.truncatedTo(ChronoUnit.HOURS);
         } else {
             try {
                 dateTime = LocalDateTime.parse(fecha, formatter);
             } catch (Exception e) {
                 slashCommandInteraction.createImmediateResponder()
-                        .setContent("¡Recuerda que el formato es dd-MM-yyy HH:mm!")
+                        .setContent("¡Recuerda que el formato es dd-MM-yyy HH!")
                         .respond();
                 return;
             }
         }
 
+        if (dateTime.isBefore(LocalDateTime.now())) {
+            slashCommandInteraction.createImmediateResponder()
+                    .setContent("La fecha no puede ser anterior al momento actual, prueba a revisar la fecha que mencionaste ;)")
+                    .respond();
+            return;
+        }
+
+        StringBuilder rolesMentions = new StringBuilder();
+        String[] roleNames = {"Avanzada", "Intermedia", "Básica", "Aprendiz", "admin", "Student UEB"};
+
+        for (String role : roleNames)
+            slashCommandInteraction.getServer().get()
+                    .getRolesByName(role).stream().findFirst()
+                    .ifPresent(
+                            r -> rolesMentions.append(r.getMentionTag()).append(" ")
+                    );
 
         switch (subCommandName) {
             case "anunciar":
+                trainingService.save(new Training(slashCommandInteraction.getUser().getName(), dateTime));
+                System.out.println("Entrenamiento creado por: " + slashCommandInteraction.getUser().getName() + " a las " + dateTime);
                 slashCommandInteraction.createImmediateResponder()
-                        .setContent("¡Entrenamiento anunciado para el " + dateTime + "!")
+                        .setContent("¡Entrenamiento anunciado para el " + dateTime + "!\n" + rolesMentions)
+                        .setAllowedMentions(
+                                new AllowedMentionsBuilder().setMentionRoles(true).build()
+                        )
                         .respond();
                 break;
 
             case "cancelar":
+                if (trainingService.delete(dateTime))
+                    System.err.println("El entrenamiento de las " + dateTime + " borrado");
+                else
+                    System.err.println("No se pudo eliminar");
                 slashCommandInteraction.createImmediateResponder()
-                        .setContent("El entrenamiento programado para el " + fecha + " ha sido cancelado.")
+                        .setContent("El entrenamiento programado para el " + dateTime + " ha sido cancelado.")
                         .respond();
                 break;
 
             default:
-                System.out.println("Soy gay");
                 slashCommandInteraction.createImmediateResponder()
                         .setContent("Comando no reconocido.")
                         .respond();
