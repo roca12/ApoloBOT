@@ -8,13 +8,13 @@
   <img src="https://img.shields.io/github/issues/roca12/ApoloBOT?style=for-the-badge&color=blue" />
   <img src="https://img.shields.io/github/issues-pr/roca12/ApoloBOT?style=for-the-badge&color=purple" />
   <p align="center">
-  <img src="https://img.shields.io/github/contributors-anon/roca12/ApoloBOT?style=for-the-badge" />
+  <img src="https://img.shields.io/badge/Contributors-12-informational?logo=java&logoColor=white&color=green&style=for-the-badge" />
   <img src="https://img.shields.io/github/repo-size/roca12/ApoloBOT?style=for-the-badge&color=orange" />
   <img src="https://img.shields.io/github/commit-activity/w/roca12/ApoloBOT?style=for-the-badge" />
   <img src="https://img.shields.io/github/last-commit/roca12/ApoloBOT?style=for-the-badge&color=yellow" />
     </p>
   <p align="center">
-  <img src="https://img.shields.io/badge/Java-11-informational?logo=java&logoColor=white&color=red&style=for-the-badge" />
+  <img src="https://img.shields.io/badge/Java-17-informational?logo=java&logoColor=white&color=red&style=for-the-badge" />
 </p>
 
 <p align="center">
@@ -118,6 +118,64 @@ ApoloBOT ha sido desarrollado utilizando las siguientes tecnologías:
   - Trello: Utilizado para la planificación y el seguimiento del desarrollo del proyec
 
 ## <img src="https://cdn.discordapp.com/emojis/1009754836314628146.gif" width="20px" height="20px">》Cómo Crear un Bot
+1. Crear una Aplicación en Discord  
+   - Accede al [Portal de Desarrolladores de Discord](https://discord.com/developers/applications).  
+   - Haz clic en **New Application** y asigna un nombre a tu aplicación.  
+   - En la sección **Bot**, selecciona **Add Bot** para convertir tu aplicación en un bot.
+
+2. Obtener el Token del Bot  
+   - En la sección **Bot** de tu aplicación, encontrarás el **Token**.  
+     Este es un identificador único que permite a tu código interactuar con Discord.  
+     **¡Guárdalo de manera segura y no lo compartas!**
+
+3. Invitar al Bot a tu Servidor  
+   - Ve a la sección **OAuth2 > URL Generator** en el Portal de Desarrolladores.  
+   - Configura lo siguiente:  
+     - En **Scopes**, selecciona **bot**.  
+     - En **Bot Permissions**, elige los permisos deseados.  
+   - Copia la URL generada y pégala en tu navegador.  
+   - Selecciona el servidor donde quieres añadir el bot y autoriza su acceso.
+
+4. Configurar el Entorno de Desarrollo  
+   - **Instalar Java**:  
+     Asegúrate de tener Java instalado en tu sistema. Verifica la instalación ejecutando:  
+     ```bash
+     java -version
+     ```  
+   - **Configurar Maven**:  
+     Si Maven no está instalado, descárgalo desde [Maven Downloads](https://maven.apache.org/download.cgi) y configúralo en tu sistema.
+
+5. Iniciar un Proyecto con JDA  
+   - Crea un nuevo proyecto en tu IDE favorito.  
+   - Añade la siguiente dependencia de `javacord` en el archivo `pom.xml`:  
+     ```xml
+     <dependency>
+         <groupId>org.javacord</groupId>
+         <artifactId>javacord</artifactId>
+         <version>3.8.0</version>
+     </dependency>
+     ```
+
+6. Configurar el Token del Bot en el Proyecto  
+   - Busca en el código del proyecto dónde se inicializa el bot.  
+     Generalmente, encontrarás una línea como esta:  
+     ```java
+     new DiscordApiBuilder().setToken("YOUR_TOKEN_HERE").login().join();
+     ```  
+   - Sustituye `"YOUR_TOKEN_HERE"` con el token que obtuviste en el paso 2.
+
+7. Invitar al Bot a tu Servidor  
+   - Ve a la sección **OAuth2 > URL Generator** en el Portal de Desarrolladores.  
+   - Configura lo siguiente:  
+     - En **Scopes**, selecciona **bot**.  
+     - En **Bot Permissions**, elige los permisos deseados.  
+   - Copia la URL generada y pégala en tu navegador.  
+   - Selecciona el servidor donde quieres añadir el bot y autoriza su acceso.
+
+8. Verificar el Funcionamiento del Bot  
+   - Una vez que el bot esté en línea y añadido a tu servidor, pruébalo enviando algunos comandos básicos.  
+   - Si necesitas personalizar comandos o funcionalidades, revisa el código fuente del proyecto.
+
 
 ## <img src="https://cdn.discordapp.com/emojis/1028680849195020308.png" width="25px" height="25px">》Contribuidores
 
@@ -136,4 +194,64 @@ ApoloBOT ha sido desarrollado utilizando las siguientes tecnologías:
 ### Andres Espitia
 ![anfeespi's Top Languages](https://github-readme-stats.vercel.app/api/top-langs/?username=anfeespi&theme=vue-dark&show_icons=true&hide_border=true&layout=compact)
 ![anfeespi's github activity graph](https://github-readme-activity-graph.vercel.app/graph?username=anfeespi&theme=dracula)
+
+---
+
+### Juan Pablo Urrego
+![MJPU17's Top Languages](https://github-readme-stats.vercel.app/api/top-langs/?username=MJPU17&theme=vue-dark&show_icons=true&hide_border=true&layout=compact)
+![MJPU17's github activity graph](https://github-readme-activity-graph.vercel.app/graph?username=MJPU17&theme=dracula)
+
+---
+
+### Natalia Giraldo
+![Nats62's Top Languages](https://github-readme-stats.vercel.app/api/top-langs/?username=Nats62&theme=vue-dark&show_icons=true&hide_border=true&layout=compact)
+![Nats62's github activity graph](https://github-readme-activity-graph.vercel.app/graph?username=Nats62&theme=dracula)
+
+---
+
+### Edwin Villaraga
+![edanv1401's Top Languages](https://github-readme-stats.vercel.app/api/top-langs/?username=edanv1401&theme=vue-dark&show_icons=true&hide_border=true&layout=compact)
+![edanv1401's github activity graph](https://github-readme-activity-graph.vercel.app/graph?username=edanv1401&theme=dracula)
+
+---
+
+### Santiago Rueda
+![HzKing8's Top Languages](https://github-readme-stats.vercel.app/api/top-langs/?username=HzKing8&theme=vue-dark&show_icons=true&hide_border=true&layout=compact)
+![HzKing8's github activity graph](https://github-readme-activity-graph.vercel.app/graph?username=HzKing8&theme=dracula)
+
+---
+
+### Andres Guerrero
+![edanv1401's Top Languages](https://github-readme-stats.vercel.app/api/top-langs/?username=edanv1401&theme=vue-dark&show_icons=true&hide_border=true&layout=compact)
+![edanv1401's github activity graph](https://github-readme-activity-graph.vercel.app/graph?username=edanv1401&theme=dracula)
+
+---
+
+### Sebastian Carroz
+![edanv1401's Top Languages](https://github-readme-stats.vercel.app/api/top-langs/?username=edanv1401&theme=vue-dark&show_icons=true&hide_border=true&layout=compact)
+![edanv1401's github activity graph](https://github-readme-activity-graph.vercel.app/graph?username=edanv1401&theme=dracula)
+
+---
+
+### Jeisson Parra
+![sson1590's Top Languages](https://github-readme-stats.vercel.app/api/top-langs/?username=sson1590&theme=vue-dark&show_icons=true&hide_border=true&layout=compact)
+![sson1590's github activity graph](https://github-readme-activity-graph.vercel.app/graph?username=sson1590&theme=dracula)
+
+---
+
+### Joann
+![edanv1401's Top Languages](https://github-readme-stats.vercel.app/api/top-langs/?username=edanv1401&theme=vue-dark&show_icons=true&hide_border=true&layout=compact)
+![edanv1401's github activity graph](https://github-readme-activity-graph.vercel.app/graph?username=edanv1401&theme=dracula)
+
+---
+
+### Cristhian
+![edanv1401's Top Languages](https://github-readme-stats.vercel.app/api/top-langs/?username=edanv1401&theme=vue-dark&show_icons=true&hide_border=true&layout=compact)
+![edanv1401's github activity graph](https://github-readme-activity-graph.vercel.app/graph?username=edanv1401&theme=dracula)
+
+
+
+
+
+
 
