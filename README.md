@@ -145,7 +145,7 @@ ApoloBOT ha sido desarrollado utilizando las siguientes tecnologías:
    - **Configurar Maven**:  
      Si Maven no está instalado, descárgalo desde [Maven Downloads](https://maven.apache.org/download.cgi) y configúralo en tu sistema.
 
-5. Iniciar un Proyecto con JDA  
+5. Iniciar un Proyecto con Javacord  
    - Crea un nuevo proyecto en tu IDE favorito.  
    - Añade la siguiente dependencia de `javacord` en el archivo `pom.xml`:  
      ```xml
