@@ -105,7 +105,7 @@ Apolo es un asistente diseñado para simplificar las tareas de administración e
 ## <img src="https://cdn.discordapp.com/emojis/852881450667081728.gif" width="25px" height="25px">》Tecnologías Utilizadas
 ApoloBOT ha sido desarrollado utilizando las siguientes tecnologías:
 
-- Lenguaje de Programación: Java 11
+- Lenguaje de Programación: Java 17
 - Frameworks y Librerías:
   - Javacord : Una interfaz para interactuar con la API de Discord en Java.
 - Herramientas de Construcción:
