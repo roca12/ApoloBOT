@@ -239,7 +239,7 @@ ApoloBOT ha sido desarrollado utilizando las siguientes tecnologías:
 
 ---
 
-### Joann
+### Joann Zamudio
 ![edanv1401's Top Languages](https://github-readme-stats.vercel.app/api/top-langs/?username=edanv1401&theme=vue-dark&show_icons=true&hide_border=true&layout=compact)
 ![edanv1401's github activity graph](https://github-readme-activity-graph.vercel.app/graph?username=edanv1401&theme=dracula)
 
