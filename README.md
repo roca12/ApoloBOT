@@ -228,8 +228,8 @@ ApoloBOT ha sido desarrollado utilizando las siguientes tecnologías:
 ---
 
 ### Sebastian Carroz
-![edanv1401's Top Languages](https://github-readme-stats.vercel.app/api/top-langs/?username=edanv1401&theme=vue-dark&show_icons=true&hide_border=true&layout=compact)
-![edanv1401's github activity graph](https://github-readme-activity-graph.vercel.app/graph?username=edanv1401&theme=dracula)
+![scarroz's Top Languages](https://github-readme-stats.vercel.app/api/top-langs/?username=scarroz&theme=vue-dark&show_icons=true&hide_border=true&layout=compact)
+![scarroz's github activity graph](https://github-readme-activity-graph.vercel.app/graph?username=scarroz&theme=dracula)
 
 ---
 
@@ -245,9 +245,9 @@ ApoloBOT ha sido desarrollado utilizando las siguientes tecnologías:
 
 ---
 
-### Cristhian
-![edanv1401's Top Languages](https://github-readme-stats.vercel.app/api/top-langs/?username=edanv1401&theme=vue-dark&show_icons=true&hide_border=true&layout=compact)
-![edanv1401's github activity graph](https://github-readme-activity-graph.vercel.app/graph?username=edanv1401&theme=dracula)
+### Cristhian Diaz
+![camid2512's Top Languages](https://github-readme-stats.vercel.app/api/top-langs/?username=camid2512&theme=vue-dark&show_icons=true&hide_border=true&layout=compact)
+![camid2512's github activity graph](https://github-readme-activity-graph.vercel.app/graph?username=camid2512&theme=dracula)
 
 
 
