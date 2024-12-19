@@ -107,7 +107,7 @@ ApoloBOT ha sido desarrollado utilizando las siguientes tecnologías:
 
 - Lenguaje de Programación: Java 11
 - Frameworks y Librerías:
-  - JDA (Java Discord API): Una interfaz para interactuar con la API de Discord en Java.
+  - Javacord : Una interfaz para interactuar con la API de Discord en Java.
 - Herramientas de Construcción:
   - Maven: Utilizado para la gestión de dependencias y construcción del proyecto.
 - Control de Versiones:
