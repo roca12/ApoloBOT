@@ -14,10 +14,16 @@ public class Training {
     private String coach;
     @Indexed
     private LocalDateTime dateTime;
+    @Indexed
+    private String trainingName;
+    @Indexed
+    private Boolean announced;
 
-    public Training(String coach, LocalDateTime dateTime) {
+    public Training(String coach, LocalDateTime dateTime, String trainingName) {
         this.coach = coach;
         this.dateTime = dateTime;
+        this.trainingName = trainingName;
+        this.announced = false;
     }
 
     public String getCoach() {
@@ -34,5 +40,21 @@ public class Training {
 
     public void setDateTime(LocalDateTime dateTime) {
         this.dateTime = dateTime;
+    }
+
+    public String getTrainingName() {
+        return trainingName;
+    }
+
+    public void setTrainingName(String trainingName) {
+        this.trainingName = trainingName;
+    }
+
+    public Boolean getAnnounced() {
+        return announced;
+    }
+
+    public void setAnnounced(Boolean announced) {
+        this.announced = announced;
     }
 }

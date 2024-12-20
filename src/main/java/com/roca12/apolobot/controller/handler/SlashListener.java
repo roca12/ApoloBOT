@@ -173,7 +173,8 @@ public class SlashListener {
 
         switch (subCommandName) {
             case "anunciar":
-                trainingService.save(new Training(slashCommandInteraction.getUser().getName(), dateTime));
+                var trainingName = slashCommandInteraction.getArguments().get(1).getStringValue().orElse("Generic Training");
+                trainingService.save(new Training(slashCommandInteraction.getUser().getName(), dateTime, trainingName));
                 System.out.println("Entrenamiento creado por: " + slashCommandInteraction.getUser().getName() + " a las " + dateTime);
                 slashCommandInteraction.createImmediateResponder()
                         .setContent("¡Entrenamiento anunciado para el " + dateTime + "!\n" + rolesMentions)

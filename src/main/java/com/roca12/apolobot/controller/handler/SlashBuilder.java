@@ -53,6 +53,9 @@ public class SlashBuilder {
                                         .addOption(
                                                 SlashCommandOption.createStringOption("fecha", "La fecha de la clase en formato dd-MM-yyyy HH:mm", true)
                                         )
+                                        .addOption(
+                                                SlashCommandOption.createStringOption("nombre", "El nombre de la clase", true)
+                                        )
                                         .build()
                         )
         );
