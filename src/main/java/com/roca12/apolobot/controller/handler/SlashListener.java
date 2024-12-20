@@ -111,11 +111,6 @@ public class SlashListener {
                     break;
                 }
 
-                case "evento": {
-                  notImplementedYet();
-                  break;
-                }
-
                 case "traducir":{
                   traducir();
                   break;
