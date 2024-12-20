@@ -14,7 +14,6 @@ import com.roca12.apolobot.service.ReRunApoloService;
 
 public class AplMain {
 
-
     private final boolean PRODUCTION_STATE = false;
 
 
@@ -85,6 +84,7 @@ public class AplMain {
             api = new DiscordApiBuilder().setToken(token).setAllIntents().login().join();
             sb = new SlashBuilder(api);
             sl = new SlashListener(api);
+            sl.setTraductorApiKey(prop.getProperty("apolo.traductor.apikey"));
             ml = new MessageListener(api);
             ms = new LessonMessageSender(api, PRODUCTION_STATE);
             trainingAnnouncer = new TrainingAnnouncer(api);
@@ -117,35 +117,6 @@ public class AplMain {
     private void testMongoDB() {
         rraDao.createNewReRun();
     }
-
-//	private void testMongoDB() {
-//
-//
-//		giDao.createGroceryItems();
-//
-//		System.out.println("\n----------------SHOW ALL GROCERY ITEMS---------------------------\n");
-//
-//		giDao.showAllGroceryItems();
-//
-//		System.out.println("\n--------------GET ITEM BY NAME-----------------------------------\n");
-//
-//		giDao.getGroceryItemByName("Whole Wheat Biscuit");
-//
-//		System.out.println("\n-----------UPDATE CATEGORY NAME OF SNACKS CATEGORY----------------\n");
-//
-//		giDao.updateCategoryName();
-//
-//		System.out.println("\n----------DELETE A GROCERY ITEM----------------------------------\n");
-//
-//		giDao.deleteGroceryItem("Kodo Millet");
-//
-//		System.out.println("\n------------FINAL COUNT OF GROCERY ITEMS-------------------------\n");
-//
-//		giDao.findCountOfGroceryItems();
-//
-//		System.out.println("\n-------------------THANK YOU---------------------------");
-//
-//	}
 
 
 }

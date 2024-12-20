@@ -1,13 +1,17 @@
 package com.roca12.apolobot.controller.handler;
 
 import java.io.IOException;
+import java.io.FileNotFoundException;
+import java.io.InputStream;
 import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
 import java.time.temporal.TemporalAdjuster;
 import java.time.temporal.TemporalAdjusters;
+import java.util.ArrayList;
 import java.util.Properties;
+import java.util.Scanner;
 import java.util.Set;
 import java.util.concurrent.ExecutionException;
 
@@ -24,12 +28,17 @@ import org.javacord.api.entity.message.mention.AllowedMentionsBuilder;
 import org.javacord.api.entity.server.Server;
 import org.javacord.api.interaction.SlashCommand;
 import org.javacord.api.interaction.SlashCommandInteraction;
+import org.springframework.core.io.ClassPathResource;
 
+import com.google.cloud.translate.Translate;
+import com.google.cloud.translate.TranslateOptions;
+import com.google.cloud.translate.Translation;
 import com.roca12.apolobot.model.Embed;
 import com.roca12.apolobot.service.ReRunApoloService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Controller;
+
 
 public class SlashListener {
 
@@ -42,10 +51,18 @@ public class SlashListener {
     private Embed embed;
 
     private DiscordApi api;
+  
+	  private String traductorApiKey;
+
+	  private ArrayList<String> badWords;
+	
+	  private Scanner sc;
 
     public SlashListener(DiscordApi api) {
         this.api = api;
         trainingService = new TrainingService();
+        badWords = new ArrayList<>();
+        loadBadWords();
     }
 
     public void handleSlashComms() {
@@ -94,15 +111,49 @@ public class SlashListener {
                     break;
                 }
 
+                case "evento": {
+                  notImplementedYet();
+                  break;
+                }
+
+                case "traducir":{
+                  traducir();
+                  break;
+                }
+
                 default:
                     notExist();
             }
 //			} else {
 //				notCoach();
 //			}
-
         });
 
+    }
+  //TODO: probar variables de entorno
+    @SuppressWarnings("deprecation")
+    public void traducir() {
+      String texto = slashCommandInteraction.getArguments().get(0).getStringValue().orElse("");
+      if(checkDeleteables(texto)) {
+        slashCommandInteraction.createImmediateResponder().setContent("¡**").respond();
+        return;
+      }
+          Translate translate = TranslateOptions.newBuilder()
+                  .setApiKey(traductorApiKey)
+                  .build()
+                  .getService();
+
+
+          String targetLanguage = "es";
+
+
+          Translation translation = translate.translate(
+              texto,
+              Translate.TranslateOption.targetLanguage(targetLanguage)
+          );
+          String traduccion = translation.getTranslatedText();
+
+          slashCommandInteraction.createImmediateResponder().setContent(translation.getTranslatedText()).respond();
     }
 
     public void showTest() {
@@ -256,6 +307,38 @@ public class SlashListener {
                         Button.secondary("secondary", "Remind me after 5 minutes")))
                 .respond();
     }
+  
+    private void loadBadWords() {
+      try {		
+        InputStream r = new ClassPathResource("files/badwords.txt").getInputStream();
+        sc = new Scanner(r);
+        while (sc.hasNext()) {
+          badWords.add(sc.nextLine().toLowerCase());
+        }
+
+      } catch (FileNotFoundException e) {
+        System.out.println("File badwords.txt not found");
+        e.printStackTrace();
+        System.exit(0);
+      } catch (IOException e) {
+        // TODO Auto-generated catch block
+        e.printStackTrace();
+      } 
+
+    }
+
+    public boolean checkDeleteables(String msg) {
+      String[] words = msg.split(" ");
+      for (String word : words) {
+        if (badWords.contains(word)) {
+          return true;
+        } else {
+          continue;
+        }
+      }
+      return false;
+
+    }
 
     public Properties getProp() {
         return prop;
@@ -288,5 +371,14 @@ public class SlashListener {
     public void setApi(DiscordApi api) {
         this.api = api;
     }
+
+    public String getTraductorApiKey() {
+      return traductorApiKey;
+    }
+
+    public void setTraductorApiKey(String traductorApiKey) {
+      this.traductorApiKey = traductorApiKey;
+    }
+	
 
 }
