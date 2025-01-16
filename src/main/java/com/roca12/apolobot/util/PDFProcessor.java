@@ -1,6 +1,8 @@
 package com.roca12.apolobot.util;
 
+import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
 
@@ -27,41 +29,48 @@ public class PDFProcessor {
 		return traduccion;
 	}
 
-	public static File processPDF(InputStream pdfStream, Translate translate) throws IOException {
+	public static String processPDF(InputStream pdfStream, Translate translate) throws IOException {
 		PDDocument document = PDDocument.load(pdfStream);
-
+		StringBuilder sb = new StringBuilder();
 		File outputFile = File.createTempFile("translated", ".pdf");
 		PDFTextStripper textStripper = new PDFTextStripper();
 		for (int i = 0; i < document.getNumberOfPages(); i++) {
 			textStripper.setStartPage(i + 1);
 			textStripper.setEndPage(i + 1);
-
 			String originalText = textStripper.getText(document);
-			try (PDPageContentStream contentStream = new PDPageContentStream(document, document.getPage(i),
-					PDPageContentStream.AppendMode.OVERWRITE, true)) {
-				String[] lines = originalText.split("\n");
-				int yPosition = 750;
-				contentStream.setFont(PDType1Font.TIMES_ROMAN, 12);
-				for (String line : lines) {
-					contentStream.beginText();
-					contentStream.newLineAtOffset(50, yPosition);
-					line = translatePDFText(line, translate);
-					contentStream.showText(sanitizeText(line));
-					contentStream.endText();
-					yPosition -= 15;
-				}
-			}
-
+			sb.append(translatePDFText(originalText, translate));
 		}
+
 		pdfStream.close();
 
-		document.save(outputFile);
-		document.close();
-		return outputFile;
-	}
 
-	private static String sanitizeText(String text) {
-		return text.replaceAll("[\\r\\f]", ""); // Eliminar caracteres de control (\r y \f)
+		document.close();
+		return sb.toString();
+	}
+	
+	public static File generateTXT(String text) throws IOException {
+		File file = new File("traduccion.txt");
+		FileWriter fw = new FileWriter(file);
+		BufferedWriter bw = new BufferedWriter(fw);
+		bw.write(format(text));
+		bw.close();
+		fw.close();
+		
+		return file;
+	}
+	
+	public static String format(String text) {
+		StringBuilder sb = new StringBuilder();
+		int x = 0;
+		for(int i = 0; i<text.length(); i++) {
+			if(text.charAt(i) == '\n'||i+1%100==0) {
+				sb.append(text.substring(x, i+1)+"\n");
+				x = i+1;
+				continue;
+			}
+			
+		}
+		return sb.toString();
 	}
 
 }

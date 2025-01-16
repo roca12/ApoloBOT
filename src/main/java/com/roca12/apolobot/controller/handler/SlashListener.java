@@ -178,10 +178,15 @@ public class SlashListener {
 			try {
 				InputStream pdfStream = pdfAttachment.asInputStream();
 				Translate translate = TranslateOptions.newBuilder().setApiKey(traductorApiKey).build().getService();
-				File translatedFile = PDFProcessor.processPDF(pdfStream, translate);
-				System.out.println("PDF procesado");
-				slashCommandInteraction.createFollowupMessageBuilder().setContent("Aqui está su PDF traducido.").addAttachment(translatedFile).send();
-				translatedFile.delete();
+				String translatedFile = PDFProcessor.processPDF(pdfStream, translate);
+				System.out.println("PDF procesado\n"+translatedFile);
+				if (translatedFile.length() > 2000) {
+					slashCommandInteraction.createFollowupMessageBuilder().setContent("Traducción de texto largo:\n")
+							.addAttachment(PDFProcessor.generateTXT(translatedFile)).send();
+				} else {
+					slashCommandInteraction.createFollowupMessageBuilder()
+							.setContent("Traducción: \n" + translatedFile).send();
+				}
 			} catch (Exception e) {
 				slashCommandInteraction.createFollowupMessageBuilder().setContent("Error al procesar PDF.").send();
 				e.printStackTrace();
