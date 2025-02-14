@@ -6,9 +6,9 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
 
+import org.apache.pdfbox.Loader;
 import org.apache.pdfbox.pdmodel.PDDocument;
-import org.apache.pdfbox.pdmodel.PDPageContentStream;
-import org.apache.pdfbox.pdmodel.font.PDType1Font;
+
 import org.apache.pdfbox.text.PDFTextStripper;
 
 import com.google.cloud.translate.Translate;
@@ -29,10 +29,9 @@ public class PDFProcessor {
 		return traduccion;
 	}
 
-	public static String processPDF(InputStream pdfStream, Translate translate) throws IOException {
-		PDDocument document = PDDocument.load(pdfStream);
+	public static String processPDF(byte[] archivo, Translate translate) throws IOException {
+		PDDocument document = Loader.loadPDF(archivo);
 		StringBuilder sb = new StringBuilder();
-		File outputFile = File.createTempFile("translated", ".pdf");
 		PDFTextStripper textStripper = new PDFTextStripper();
 		for (int i = 0; i < document.getNumberOfPages(); i++) {
 			textStripper.setStartPage(i + 1);
@@ -40,8 +39,6 @@ public class PDFProcessor {
 			String originalText = textStripper.getText(document);
 			sb.append(translatePDFText(originalText, translate));
 		}
-
-		pdfStream.close();
 
 
 		document.close();

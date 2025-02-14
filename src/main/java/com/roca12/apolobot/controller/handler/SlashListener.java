@@ -176,9 +176,9 @@ public class SlashListener {
 				return;
 			}
 			try {
-				InputStream pdfStream = pdfAttachment.asInputStream();
+				byte[] archivo = pdfAttachment.asByteArray().get();
 				Translate translate = TranslateOptions.newBuilder().setApiKey(traductorApiKey).build().getService();
-				String translatedFile = PDFProcessor.processPDF(pdfStream, translate);
+				String translatedFile = PDFProcessor.processPDF(archivo, translate);
 				System.out.println("PDF procesado\n"+translatedFile);
 				if (translatedFile.length() > 2000) {
 					slashCommandInteraction.createFollowupMessageBuilder().setContent("Traducción de texto largo:\n")
