@@ -1,12 +1,12 @@
 // for building image
 docker build -t diegoroca12/apolobot .
 // search vulnerabilities
-docker scort quickview
+docker scout quickview
 // tag for latest 
 docker tag diegoroca12/apolobot diegoroca12/apolobot:latest
 // tag for next version
 docker tag diegoroca12/apolobot diegoroca12/apolobot:0.3
 // push all tags
 docker image push --all-tags diegoroca12/apolobot
-//run container with name remember change version
-docker run -d --name apolobot-java diegoroca12/apolobot:0.4
+//run container with name, remember change version
+docker run -d --name apolobot-java-prod diegoroca12/apolobot:2024.1
