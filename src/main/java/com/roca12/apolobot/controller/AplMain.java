@@ -16,7 +16,6 @@ import com.roca12.apolobot.service.ReRunApoloService;
 
 public class AplMain {
 
-
 	private final boolean PRODUCTION_STATE = true;
 
 	private String token;
@@ -28,17 +27,15 @@ public class AplMain {
 	private LessonMessageSender ms;
 
 	private Properties prop = new Properties();
-	
-	//private GroceryItemDAO giDao;
+
 	private ReRunApoloService rraDao;
 
 	public AplMain() {
-		//giDao = new GroceryItemDAO();
 		rraDao = new ReRunApoloService();
 	}
 
 	public void run() {
-		
+
 		loadAndCheckCriticals();
 		System.out.println("Starting Apolo bot");
 		try {
@@ -69,11 +66,11 @@ public class AplMain {
 	}
 
 	private boolean loadAndCheckCriticals() {
-		//System.out.println(System.getProperty("user.dir"));
+		// System.out.println(System.getProperty("user.dir"));
 		try {
 			InputStream r = new ClassPathResource("files/main.properties").getInputStream();
 			prop.load(r);
-			//System.out.println("token " + prop.getProperty("apolo.test.token"));
+			// System.out.println("token " + prop.getProperty("apolo.test.token"));
 			if (PRODUCTION_STATE) {
 				System.out.println("Running in prod mode");
 				token = prop.getProperty("apolo.prod.token");
@@ -81,16 +78,15 @@ public class AplMain {
 				System.out.println("Running in dev test mode");
 				token = prop.getProperty("apolo.test.token");
 			}
-			
-			
+
 			api = new DiscordApiBuilder().setToken(token).setAllIntents().login().join();
 			sb = new SlashBuilder(api);
 			sl = new SlashListener(api);
 			sl.setTraductorApiKey(prop.getProperty("apolo.traductor.apikey"));
 			ml = new MessageListener(api);
 			ms = new LessonMessageSender(api, PRODUCTION_STATE);
-			
-			testMongoDB(); 
+
+			testMongoDB();
 
 			return true;
 
@@ -99,8 +95,6 @@ public class AplMain {
 			System.err.println("main.properties error");
 			return false;
 		}
-		
-		
 
 	}
 
@@ -116,7 +110,7 @@ public class AplMain {
 			return true;
 		}
 	}
-	
+
 	private void testMongoDB() {
 		rraDao.createNewReRun();
 	}

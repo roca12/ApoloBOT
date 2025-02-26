@@ -6,12 +6,12 @@
 	<parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
-		<version>3.4.0</version>
+		<version>3.4.3</version>
 		<relativePath /> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.roca12</groupId>
 	<artifactId>apolobot</artifactId>
-	<version>2024.1</version>
+	<version>2025.1</version>
 	<name>apolobot</name>
 	<description>apolobot</description>
 	<properties>
@@ -45,8 +45,17 @@
 		<dependency>
 			<groupId>com.google.cloud</groupId>
 			<artifactId>google-cloud-translate</artifactId>
-			<version>2.54.0</version>
+			<version>2.58.0</version>
 		</dependency>
+
+		<dependency>
+			<groupId>org.apache.pdfbox</groupId>
+			<artifactId>pdfbox</artifactId>
+			<version>3.0.4</version>
+		</dependency>
+
+
+
 
 		<dependency>
 			<groupId>com.google.code.gson</groupId>
@@ -97,5 +106,7 @@
 			</plugin>
 		</plugins>
 	</build>
+	
+	
 
 </project>
