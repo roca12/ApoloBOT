@@ -10,10 +10,10 @@ import com.roca12.apolobot.controller.AplMain;
 @EnableMongoRepositories
 public class ApolobotApplication {
 
-	public static void main(String[] args) {
-		SpringApplication.run(ApolobotApplication.class, args);
-		AplMain am= new AplMain();
-		am.run();
-	}
+    public static void main(String[] args) {
+        SpringApplication.run(ApolobotApplication.class, args);
+        AplMain am = new AplMain();
+        am.run();
+    }
 
 }

@@ -1,16 +1,9 @@
 package com.roca12.apolobot.controller.handler;
 
-import java.util.Arrays;
-import java.util.HashSet;
-import java.util.Properties;
-import java.util.Set;
+import java.util.*;
 
 import org.javacord.api.DiscordApi;
-import org.javacord.api.interaction.SlashCommand;
-import org.javacord.api.interaction.SlashCommandBuilder;
-import org.javacord.api.interaction.SlashCommandOption;
-import org.javacord.api.interaction.SlashCommandOptionType;
-
+import org.javacord.api.interaction.*;
 
 public class SlashBuilder {
 
@@ -38,12 +31,23 @@ public class SlashBuilder {
 		builders.add(new SlashCommandBuilder().setName("numerousuarios")
 				.setDescription("Cuenta la cantidad de usuarios existentes en el servidor"));
 
-		builders.add(SlashCommand.with("entrenamiento", "Capacidad de anunciar o cancelar clases",
-				Arrays.asList(
-						SlashCommandOption.createWithOptions(SlashCommandOptionType.SUB_COMMAND, "Cancelar",
-								"Cancela la siguiente clase"),
-						SlashCommandOption.createWithOptions(SlashCommandOptionType.SUB_COMMAND, "Anunciar",
-								"Envia un aviso a todos los participantes de este canal de texto"))));
+		builders.add(new SlashCommandBuilder().setName("entrenamiento")
+				.setDescription("Capacidad de anunciar o cancelar clases")
+				.addOption(new SlashCommandOptionBuilder().setName("cancelar")
+						.setDescription("Cancela la clase en la fecha especificada")
+						.setType(SlashCommandOptionType.SUB_COMMAND)
+						.addOption(SlashCommandOption.createStringOption("fecha",
+								"La fecha de la clase en formato dd-MM-yyyy HH:mm", true))
+						.build())
+				.addOption(new SlashCommandOptionBuilder().setName("anunciar")
+						.setDescription("Envía un viso a todos los participantes acerca de una fecha de entrenamiento")
+						.setType(SlashCommandOptionType.SUB_COMMAND)
+						.addOption(SlashCommandOption.createStringOption("fecha",
+								"La fecha de la clase en formato dd-MM-yyyy HH:mm", true))
+						.addOption(SlashCommandOption.createStringOption("nombre", "El nombre de la clase", true))
+						.build()));
+
+		builders.add(new SlashCommandBuilder().setName("teamo").setDescription("Demuestra tu amor por el bot :D"));
 
 		builders.add(SlashCommand.with("evento",
 				"Administra eventos futuros, tendra un recordatorio un dia antes y una hora antes",
@@ -59,9 +63,11 @@ public class SlashBuilder {
 
 		builders.add(new SlashCommandBuilder().setName("traducir")
 				.setDescription("Traduce un texto desde cualquier idioma al español.")
-				.addOption(SlashCommandOption.createStringOption("text",
-						"El texto que deseas traducir.", true 
-				)));
+				.addOption(SlashCommandOption.createStringOption("text", "El texto que deseas traducir.", true)));
+
+		builders.add(new SlashCommandBuilder().setName("traducirpdf")
+				.setDescription("Traduce el texto de un PDF y te devuelve el PDF ya traducido. ")
+				.addOption(SlashCommandOption.createAttachmentOption("pdf", "El PDF que va a ser traducido.", true)));
 
 		return builders;
 	}

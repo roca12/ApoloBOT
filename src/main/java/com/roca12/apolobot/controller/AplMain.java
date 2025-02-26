@@ -4,14 +4,12 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.Properties;
 
+import com.roca12.apolobot.controller.handler.*;
+import com.roca12.apolobot.util.ILoveResponses;
 import org.javacord.api.DiscordApi;
 import org.javacord.api.DiscordApiBuilder;
 import org.springframework.core.io.ClassPathResource;
 
-import com.roca12.apolobot.controller.handler.LessonMessageSender;
-import com.roca12.apolobot.controller.handler.MessageListener;
-import com.roca12.apolobot.controller.handler.SlashBuilder;
-import com.roca12.apolobot.controller.handler.SlashListener;
 import com.roca12.apolobot.service.ReRunApoloService;
 
 public class AplMain {
@@ -114,4 +112,5 @@ public class AplMain {
 	private void testMongoDB() {
 		rraDao.createNewReRun();
 	}
+
 }
