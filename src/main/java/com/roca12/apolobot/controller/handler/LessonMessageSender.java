@@ -97,9 +97,9 @@ public class LessonMessageSender {
 //			new MessageBuilder().setAllowedMentions(allowedMentions)
 //					.setContent("Recuerda que la clase es de 8 a 9 PM, los dias Lunes, Martes y Miercoles ")
 //					.append("@here").send(s);
-			new MessageBuilder().setAllowedMentions(allowedMentions)
-					.setContent(
-							"Recuerda que nuestros entrenamientos son de 8 a 9 PM, los dias Lunes, Martes y Miercoles ")
+			new MessageBuilder().setAllowedMentions(allowedMentions).setContent(
+					"Recuerda que nuestros entrenamientos son de 8 a 9 PM, los dias Lunes, Miercoles y Jueves, y en caso de no poder asistir siempre quedan"
+							+ "las grabaciones en #grabaciones")
 					.send(s);
 		}
 

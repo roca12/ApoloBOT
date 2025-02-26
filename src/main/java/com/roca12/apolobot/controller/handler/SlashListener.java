@@ -59,6 +59,8 @@ public class SlashListener {
 	private ArrayList<String> badWords;
 
 	private Scanner sc;
+	
+	private String BOT_VERSION="2025-I";
 
 	public SlashListener(DiscordApi api) {
 		this.api = api;
@@ -148,16 +150,32 @@ public class SlashListener {
 		Translation translation = translate.translate(texto, Translate.TranslateOption.targetLanguage(targetLanguage));
 		String traduccion = translation.getTranslatedText();
 
-		slashCommandInteraction.createImmediateResponder().setContent(translation.getTranslatedText()).respond();
+
+
+        Translation translation = translate.translate(
+            texto,
+            Translate.TranslateOption.targetLanguage(targetLanguage)
+        );
+        //TODO
+        String traduccion = translation.getTranslatedText();
+        
+        slashCommandInteraction.createImmediateResponder().setContent(translation.getTranslatedText()).respond();
+
 	}
 
 	public void showTest() {
 		ReRunApoloService rraDao = new ReRunApoloService();
 		try {
 			rraDao.createNewReRunByTest();
+
+			
 			slashCommandInteraction.createImmediateResponder()
-					.setContent("Instancia DB corriendo y recibiendo solicitudes").appendNewLine()
-					.append("Todos los sistemas estan operativos!").respond();
+			.setContent("Verificando sistemas criticos de APOLO").
+			appendNewLine().append("Versión de bot: "+BOT_VERSION).
+			appendNewLine().append("Instancia DB corriendo y recibiendo solicitudes").
+			appendNewLine().append("Todos los sistemas estan operativos!")
+			.respond();
+
 		} catch (Exception e) {
 			slashCommandInteraction.createImmediateResponder().setContent(e.getMessage()).respond();
 			slashCommandInteraction.createImmediateResponder().setContent("Algun sistema esta fallando").respond();
