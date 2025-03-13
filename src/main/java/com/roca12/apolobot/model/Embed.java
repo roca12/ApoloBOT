@@ -142,7 +142,7 @@ public class Embed {
       embed.setDescription(description);
     }
 
-    if (author!=null) {
+    if (author != null) {
 
       embed.setAuthor(author);
     }

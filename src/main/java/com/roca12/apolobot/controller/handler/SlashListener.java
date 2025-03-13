@@ -156,8 +156,6 @@ public class SlashListener {
         translate.translate(texto, Translate.TranslateOption.targetLanguage(targetLanguage));
     String traduccion = translation.getTranslatedText();
 
-   
-
     slashCommandInteraction
         .createImmediateResponder()
         .setContent(translation.getTranslatedText())
