@@ -1,13 +1,11 @@
 package com.roca12.apolobot.model;
 
 import java.time.LocalDateTime;
-import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 @Document("training")
 public class Training {
-  @Id private String id;
   @Indexed private String coach;
   @Indexed private LocalDateTime dateTime;
   @Indexed private String trainingName;
