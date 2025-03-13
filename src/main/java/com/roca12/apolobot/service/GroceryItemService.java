@@ -1,15 +1,15 @@
-//package com.roca12.apolobot.service;
+// package com.roca12.apolobot.service;
 //
-//import java.util.List;
+// import java.util.List;
 //
-//import org.springframework.stereotype.Controller;
+// import org.springframework.stereotype.Controller;
 //
-//import com.roca12.apolobot.controller.ApplicationContextHolder;
-//import com.roca12.apolobot.model.GroceryItem;
-//import com.roca12.apolobot.repository.GroceryItemRepository;
+// import com.roca12.apolobot.controller.ApplicationContextHolder;
+// import com.roca12.apolobot.model.GroceryItem;
+// import com.roca12.apolobot.repository.GroceryItemRepository;
 //
-//@Controller
-//public class GroceryItemService {
+// @Controller
+// public class GroceryItemService {
 //
 //	private GroceryItemRepository groceryItemRepo;
 //
@@ -19,7 +19,8 @@
 //
 //	public void createGroceryItems() {
 //		System.out.println("Data creation started...");
-//		groceryItemRepo.save(new GroceryItem("Whole Wheat Biscuit", "Whole Wheat Biscuit", 5, "snacks"));
+//		groceryItemRepo.save(new GroceryItem("Whole Wheat Biscuit", "Whole Wheat Biscuit", 5,
+// "snacks"));
 //		System.out.println("Data creation complete...");
 //	}
 //
@@ -64,4 +65,4 @@
 //		groceryItemRepo.deleteById(id);
 //		System.out.println("Item with id " + id + " deleted...");
 //	}
-//}
+// }
