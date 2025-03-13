@@ -8,18 +8,18 @@ import java.util.List;
 import java.util.Random;
 
 public class ILoveResponses {
-  public static List<String> phrases;
+	private static List<String> phrases;
 
-  public static String getRandomPhrase() {
-    Path path = Paths.get("src/main/resources/files/iloveresponses.txt");
-    try {
-      phrases = Files.readAllLines(path);
-    } catch (IOException e) {
-      throw new RuntimeException(e);
-    }
+	public static String getRandomPhrase() {
+		Path path = Paths.get("src/main/resources/files/iloveresponses.txt");
+		try {
+			phrases = Files.readAllLines(path);
+		} catch (IOException e) {
+			throw new RuntimeException(e);
+		}
 
-    Random random = new Random();
-    int randomIndex = random.nextInt(phrases.size());
-    return phrases.get(randomIndex);
-  }
+		Random random = new Random();
+		int randomIndex = random.nextInt(phrases.size());
+		return phrases.get(randomIndex);
+	}
 }
