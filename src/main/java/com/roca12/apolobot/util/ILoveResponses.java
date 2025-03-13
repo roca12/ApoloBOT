@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.Random;
 
 public class ILoveResponses {
-  public static List<String> phrases;
+  private static List<String> phrases;
 
   public static String getRandomPhrase() {
     Path path = Paths.get("src/main/resources/files/iloveresponses.txt");

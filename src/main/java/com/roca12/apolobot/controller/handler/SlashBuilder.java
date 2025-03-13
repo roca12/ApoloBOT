@@ -4,6 +4,7 @@ import java.util.*;
 import org.javacord.api.DiscordApi;
 import org.javacord.api.interaction.*;
 
+/** Instances of this class are used to perform slash command build action. */
 public class SlashBuilder {
 
   private DiscordApi api;

@@ -13,6 +13,7 @@ import org.javacord.api.entity.message.MessageBuilder;
 import org.javacord.api.entity.message.mention.AllowedMentions;
 import org.javacord.api.entity.message.mention.AllowedMentionsBuilder;
 
+/** Instances of this class are used to perform message send action. */
 public class LessonMessageSender {
 
   private DiscordApi api;
@@ -85,6 +86,9 @@ public class LessonMessageSender {
                   }
                 }
               }
+              if (now.getYear() > 2050) {
+                break;
+              }
             }
           }
         };
@@ -101,10 +105,11 @@ public class LessonMessageSender {
         new AllowedMentionsBuilder().setMentionEveryoneAndHere(true).build();
 
     for (ServerTextChannel s : allChannels) {
-      //			new MessageBuilder().setAllowedMentions(allowedMentions)
-      //					.setContent("Recuerda que la clase es de 8 a 9 PM, los dias Lunes, Martes y Miercoles
+      // new MessageBuilder().setAllowedMentions(allowedMentions)
+      // .setContent("Recuerda que la clase es de 8 a 9 PM, los dias Lunes, Martes y
+      // Miercoles
       // ")
-      //					.append("@here").send(s);
+      // .append("@here").send(s);
       new MessageBuilder()
           .setAllowedMentions(allowedMentions)
           .setContent(

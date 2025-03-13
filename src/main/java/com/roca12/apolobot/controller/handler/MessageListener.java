@@ -13,6 +13,7 @@ import org.javacord.api.event.message.MessageCreateEvent;
 import org.javacord.api.listener.message.MessageCreateListener;
 import org.springframework.core.io.ClassPathResource;
 
+/** Instances of this class are used to perform message listening action. */
 public class MessageListener implements MessageCreateListener {
 
   private DiscordApi api;
