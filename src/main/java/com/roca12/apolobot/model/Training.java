@@ -7,7 +7,6 @@ import org.springframework.data.mongodb.core.mapping.Document;
 
 @Document("training")
 public class Training {
-  @Id private String id;
   @Indexed private String coach;
   @Indexed private LocalDateTime dateTime;
   @Indexed private String trainingName;
