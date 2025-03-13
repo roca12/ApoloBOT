@@ -13,6 +13,12 @@ import org.javacord.api.entity.message.MessageBuilder;
 import org.javacord.api.entity.message.mention.AllowedMentions;
 import org.javacord.api.entity.message.mention.AllowedMentionsBuilder;
 
+
+/**
+ * Instances of this class are used to perform message send action.
+ *
+ * 
+ */
 public class LessonMessageSender {
 
 	private DiscordApi api;

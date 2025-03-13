@@ -33,6 +33,11 @@ import org.javacord.api.interaction.SlashCommandInteraction;
 import org.javacord.api.interaction.SlashCommandInteractionOption;
 import org.springframework.core.io.ClassPathResource;
 
+/**
+ * Instances of this class are used to perform slash command action.
+ *
+ * 
+ */
 public class SlashListener {
 
   private TrainingService trainingService;
