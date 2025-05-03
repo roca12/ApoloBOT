@@ -44,8 +44,11 @@
 - :information_source: [Introducción](#introducción)
 - :pencil: [Lista de Comandos](#lista-de-comandos)
 - :computer: [Tecnologías Utilizadas](#tecnologías-utilizadas)
+- :file_folder: [Estructura del Proyecto](#estructura-del-proyecto)
+- :page_with_curl: [Documentación](#documentación)
 - :clipboard: [Cómo Crear un Bot](#cómo-crear-un-bot)
 - :turtle: [Contribuidores](#contribuidores)
+- :uk: [English Documentation](#english-documentation)
 
 ## <img src="https://cdn.discordapp.com/emojis/1028680849195020308.png" width="20px" height="20px">》Introducción
 Apolo es un asistente diseñado para simplificar las tareas de administración en servidores de Discord. Su diseño intuitivo y su capacidad de respuesta en tiempo real lo convierten en el compañero perfecto para comunidades que buscan:
@@ -107,7 +110,11 @@ ApoloBOT ha sido desarrollado utilizando las siguientes tecnologías:
 
 - Lenguaje de Programación: Java 17
 - Frameworks y Librerías:
-  - Javacord : Una interfaz para interactuar con la API de Discord en Java.
+  - Javacord: Una interfaz para interactuar con la API de Discord en Java.
+  - Spring Boot: Framework para facilitar la configuración y despliegue de aplicaciones Java.
+  - Google Cloud Translate: API para servicios de traducción.
+- Base de Datos:
+  - MongoDB: Base de datos NoSQL para almacenar información de entrenamientos y eventos.
 - Herramientas de Construcción:
   - Maven: Utilizado para la gestión de dependencias y construcción del proyecto.
 - Control de Versiones:
@@ -115,7 +122,66 @@ ApoloBOT ha sido desarrollado utilizando las siguientes tecnologías:
 - Plataforma de Desarrollo:
   - GitHub: Hospedaje del repositorio y gestión de versiones.
 - Herramientas de Organización:
-  - Trello: Utilizado para la planificación y el seguimiento del desarrollo del proyec
+  - Trello: Utilizado para la planificación y el seguimiento del desarrollo del proyecto.
+
+## <img src="https://cdn.discordapp.com/emojis/1009754836314628146.gif" width="20px" height="20px">》Estructura del Proyecto
+El proyecto está organizado en una estructura de paquetes típica de Spring Boot:
+
+```
+src/main/java/com/roca12/apolobot/
+├── ApolobotApplication.java       # Punto de entrada de la aplicación
+├── controller/                    # Controladores
+│   ├── AplMain.java               # Controlador principal del bot
+│   └── handler/                   # Manejadores de eventos
+│       ├── LessonMessageSender.java  # Envío de mensajes programados
+│       ├── MessageListener.java      # Escucha de mensajes
+│       ├── SlashBuilder.java         # Construcción de comandos slash
+│       ├── SlashListener.java        # Escucha de comandos slash
+│       └── TrainingAnnouncer.java    # Anunciador de entrenamientos
+├── model/                         # Modelos de datos
+│   ├── Embed.java                 # Modelo para mensajes enriquecidos
+│   ├── ReRunApolo.java            # Modelo para reinicio del bot
+│   └── Training.java              # Modelo para entrenamientos
+├── repository/                    # Repositorios para acceso a datos
+│   ├── ReRunApoloRepository.java  # Repositorio para ReRunApolo
+│   └── TrainingRepository.java    # Repositorio para Training
+├── service/                       # Servicios de negocio
+│   ├── GroceryItemService.java    # Servicio para items
+│   ├── ReRunApoloService.java     # Servicio para reinicio del bot
+│   └── TrainingService.java       # Servicio para entrenamientos
+└── util/                          # Utilidades
+    ├── Encryptor.java             # Utilidad para encriptación
+    ├── ILoveResponses.java        # Respuestas para comando teamo
+    ├── PDFProcessor.java          # Procesador de PDFs
+    ├── TranslationUtil.java       # Utilidad para traducción
+    └── TranslateDocumentation.java # Utilidad para traducir documentación
+```
+
+## <img src="https://cdn.discordapp.com/emojis/814216203466965052.png" width="25px" height="25px">》Documentación
+El proyecto cuenta con documentación completa en forma de comentarios Javadoc en todos los archivos principales. La documentación está disponible en dos idiomas:
+
+- **Inglés**: Todos los archivos principales tienen comentarios Javadoc en inglés que explican el propósito de cada clase, método y campo.
+- **Español**: Se han creado versiones traducidas de los archivos con sufijo `_es.java` que contienen la misma documentación pero en español.
+
+### Utilidades de Documentación
+
+El proyecto incluye dos utilidades para la gestión de la documentación:
+
+1. **TranslationUtil.java**: Utilidad que usa la API de Google Cloud Translate para traducir texto de inglés a español.
+2. **TranslateDocumentation.java**: Utilidad que procesa archivos Java, identifica los comentarios Javadoc, los traduce usando TranslationUtil, y genera nuevos archivos con la documentación traducida.
+
+Para ejecutar la traducción de la documentación:
+
+```bash
+# Navegar al directorio del proyecto
+cd ApoloBOT
+
+# Compilar el proyecto
+mvn compile
+
+# Ejecutar la utilidad de traducción
+java -cp target/classes com.roca12.apolobot.util.TranslateDocumentation
+```
 
 ## <img src="https://cdn.discordapp.com/emojis/1009754836314628146.gif" width="20px" height="20px">》Cómo Crear un Bot
 1. Crear una Aplicación en Discord  
@@ -249,9 +315,103 @@ ApoloBOT ha sido desarrollado utilizando las siguientes tecnologías:
 ![camid2512's Top Languages](https://github-readme-stats.vercel.app/api/top-langs/?username=camid2512&theme=vue-dark&show_icons=true&hide_border=true&layout=compact)
 ![camid2512's github activity graph](https://github-readme-activity-graph.vercel.app/graph?username=camid2512&theme=dracula)
 
+---
 
+## <img src="https://cdn.discordapp.com/emojis/1028680849195020308.png" width="25px" height="25px">》English Documentation
 
+### Introduction
+ApoloBOT is a Discord bot designed to make your server more efficient and organized. It offers advanced tools for coaches and administrators, such as event management, text translation, and more.
 
+### Main Features
+- :globe_with_meridians: Translation of text from any language to Spanish.
+- :calendar: Management and organization of events and training sessions.
+- :white_check_mark: Diagnostics to verify bot connectivity.
+- :wrench: Advanced tools exclusively for coaches.
 
+### Commands
+| Command | Description | Required Permissions |
+|---------|-------------|---------------------|
+| `/ping` | Returns a known greeting. | None |
+| `/test` | Verifies the connectivity of all systems. | Coach |
+| `/ayuda` | Shows the complete list of commands and who can use them. | None |
+| `/evento` | Manages future events. | Coach |
+| `/entrenamiento` | Announces, updates, or cancels training sessions. | Coach |
+| `/numerousuarios` | Counts the number of users in the server. | Coach |
+| `/traducir` | Translates text from any language to Spanish, censoring offensive words. | None |
 
+### Project Structure
+The project is organized in a typical Spring Boot package structure:
 
+```
+src/main/java/com/roca12/apolobot/
+├── ApolobotApplication.java       # Application entry point
+├── controller/                    # Controllers
+│   ├── AplMain.java               # Main bot controller
+│   └── handler/                   # Event handlers
+│       ├── LessonMessageSender.java  # Scheduled message sending
+│       ├── MessageListener.java      # Message listening
+│       ├── SlashBuilder.java         # Slash command building
+│       ├── SlashListener.java        # Slash command listening
+│       └── TrainingAnnouncer.java    # Training announcer
+├── model/                         # Data models
+│   ├── Embed.java                 # Model for rich messages
+│   ├── ReRunApolo.java            # Model for bot restart
+│   └── Training.java              # Model for training sessions
+├── repository/                    # Repositories for data access
+│   ├── ReRunApoloRepository.java  # Repository for ReRunApolo
+│   └── TrainingRepository.java    # Repository for Training
+├── service/                       # Business services
+│   ├── GroceryItemService.java    # Service for items
+│   ├── ReRunApoloService.java     # Service for bot restart
+│   └── TrainingService.java       # Service for training sessions
+└── util/                          # Utilities
+    ├── Encryptor.java             # Encryption utility
+    ├── ILoveResponses.java        # Responses for teamo command
+    ├── PDFProcessor.java          # PDF processor
+    ├── TranslationUtil.java       # Translation utility
+    └── TranslateDocumentation.java # Documentation translation utility
+```
+
+### Documentation
+The project has complete documentation in the form of Javadoc comments in all main files. The documentation is available in two languages:
+
+- **English**: All main files have Javadoc comments in English that explain the purpose of each class, method, and field.
+- **Spanish**: Translated versions of the files with the suffix `_es.java` have been created that contain the same documentation but in Spanish.
+
+### Documentation Utilities
+The project includes two utilities for documentation management:
+
+1. **TranslationUtil.java**: Utility that uses the Google Cloud Translate API to translate text from English to Spanish.
+2. **TranslateDocumentation.java**: Utility that processes Java files, identifies Javadoc comments, translates them using TranslationUtil, and generates new files with the translated documentation.
+
+To run the documentation translation:
+
+```bash
+# Navigate to the project directory
+cd ApoloBOT
+
+# Compile the project
+mvn compile
+
+# Run the translation utility
+java -cp target/classes com.roca12.apolobot.util.TranslateDocumentation
+```
+
+### Technologies Used
+ApoloBOT has been developed using the following technologies:
+
+- Programming Language: Java 17
+- Frameworks and Libraries:
+  - Javacord: An interface to interact with the Discord API in Java.
+  - Spring Boot: Framework to facilitate the configuration and deployment of Java applications.
+  - Google Cloud Translate: API for translation services.
+- Database:
+  - MongoDB: NoSQL database to store information about training sessions and events.
+- Build Tools:
+  - Maven: Used for dependency management and project building.
+- Version Control:
+  - Git: For tracking changes and collaboration in the source code.
+- Development Platform:
+  - GitHub: Repository hosting and version management.
+- Organization Tools:
+  - Trello: Used for planning and tracking project development.

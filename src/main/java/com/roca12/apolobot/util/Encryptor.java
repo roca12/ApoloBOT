@@ -13,12 +13,30 @@ import javax.crypto.NoSuchPaddingException;
 import javax.crypto.spec.GCMParameterSpec;
 import javax.crypto.spec.SecretKeySpec;
 
+/**
+ * Utility class for encrypting and decrypting text using AES encryption.
+ * This class provides methods to encrypt and decrypt strings using AES/GCM/NoPadding
+ * cipher transformation with Base64 encoding for the encrypted output.
+ * 
+ * @author roca12
+ * @version 2025-I
+ */
 public class Encryptor {
 
+  /** The encryption algorithm used (AES) */
   private static final String algoritmo = "AES";
 
+  /** The cipher transformation specification (AES/GCM/NoPadding) */
   private static final String tipoCifrado = "AES/GCM/NoPadding";
 
+  /**
+   * Encrypts a text string using AES encryption.
+   * 
+   * @param llave The encryption key
+   * @param iv The initialization vector for GCM mode
+   * @param texto The plain text to encrypt
+   * @return The Base64-encoded encrypted string
+   */
   public static String encrypt(String llave, String iv, String texto) {
     Cipher cipher = null;
     try {
@@ -45,6 +63,14 @@ public class Encryptor {
     return new String(encodeBase64(encrypted));
   }
 
+  /**
+   * Decrypts a Base64-encoded encrypted string.
+   * 
+   * @param llave The encryption key (must be the same as used for encryption)
+   * @param iv The initialization vector (must be the same as used for encryption)
+   * @param encrypted The Base64-encoded encrypted string
+   * @return The decrypted plain text
+   */
   public static String decrypt(String llave, String iv, String encrypted) {
     Cipher cipher = null;
     try {
