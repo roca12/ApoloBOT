@@ -7,38 +7,44 @@ import org.javacord.api.entity.message.embed.EmbedBuilder;
 import org.javacord.api.entity.user.User;
 
 /**
- * Model class for creating and managing Discord message embeds.
- * This class provides a simplified interface for creating rich embeds
- * that can be sent in Discord messages, with support for titles, descriptions,
- * fields, colors, images, and more.
- * 
+ * Model class for creating and managing Discord message embeds. This class provides a simplified
+ * interface for creating rich embeds that can be sent in Discord messages, with support for titles,
+ * descriptions, fields, colors, images, and more.
+ *
  * @author roca12
  * @version 2025-I
  */
 public class Embed {
   /** The title of the embed */
   private String title;
+
   /** The main text content of the embed */
   private String description;
+
   /** The user displayed as the author of the embed */
   private User author;
+
   /** List of fields to display in the embed (format: "name,value") */
   private ArrayList<String> fields;
+
   /** List of inline fields to display in the embed (format: "name,value") */
   private ArrayList<String> inLineFields;
+
   /** The color of the embed's left border */
   private String color;
+
   /** The footer text and icon of the embed (format: "text,iconUrl") */
   private String footer;
+
   /** The main image of the embed */
   private String image;
+
   /** The small image displayed in the top right of the embed */
   private String thumbnail;
 
   /**
-   * Default constructor that initializes an empty embed.
-   * All string fields are initialized to empty strings, lists are initialized as empty ArrayLists,
-   * and the author is set to null.
+   * Default constructor that initializes an empty embed. All string fields are initialized to empty
+   * strings, lists are initialized as empty ArrayLists, and the author is set to null.
    */
   public Embed() {
     fields = new ArrayList<String>();
@@ -54,7 +60,7 @@ public class Embed {
 
   /**
    * Parameterized constructor that initializes an embed with all properties.
-   * 
+   *
    * @param title The title of the embed
    * @param description The main text content of the embed
    * @param author The user displayed as the author of the embed
@@ -89,7 +95,7 @@ public class Embed {
 
   /**
    * Gets the title of the embed.
-   * 
+   *
    * @return The title
    */
   public String getTitle() {
@@ -98,7 +104,7 @@ public class Embed {
 
   /**
    * Sets the title of the embed.
-   * 
+   *
    * @param title The title to set
    */
   public void setTitle(String title) {
@@ -107,7 +113,7 @@ public class Embed {
 
   /**
    * Gets the description of the embed.
-   * 
+   *
    * @return The description
    */
   public String getDescription() {
@@ -116,7 +122,7 @@ public class Embed {
 
   /**
    * Sets the description of the embed.
-   * 
+   *
    * @param description The description to set
    */
   public void setDescription(String description) {
@@ -125,7 +131,7 @@ public class Embed {
 
   /**
    * Gets the author of the embed.
-   * 
+   *
    * @return The author user
    */
   public User getAuthor() {
@@ -134,7 +140,7 @@ public class Embed {
 
   /**
    * Sets the author of the embed.
-   * 
+   *
    * @param author The author user to set
    */
   public void setAuthor(User author) {
@@ -143,7 +149,7 @@ public class Embed {
 
   /**
    * Gets the list of fields for the embed.
-   * 
+   *
    * @return The list of fields (format: "name,value")
    */
   public ArrayList<String> getFields() {
@@ -152,7 +158,7 @@ public class Embed {
 
   /**
    * Sets the list of fields for the embed.
-   * 
+   *
    * @param fields The list of fields to set (format: "name,value")
    */
   public void setFields(ArrayList<String> fields) {
@@ -161,7 +167,7 @@ public class Embed {
 
   /**
    * Gets the list of inline fields for the embed.
-   * 
+   *
    * @return The list of inline fields (format: "name,value")
    */
   public ArrayList<String> getInLineFields() {
@@ -170,7 +176,7 @@ public class Embed {
 
   /**
    * Sets the list of inline fields for the embed.
-   * 
+   *
    * @param inLineFields The list of inline fields to set (format: "name,value")
    */
   public void setInLineFields(ArrayList<String> inLineFields) {
@@ -179,7 +185,7 @@ public class Embed {
 
   /**
    * Gets the color of the embed's left border.
-   * 
+   *
    * @return The color
    */
   public String getColor() {
@@ -188,7 +194,7 @@ public class Embed {
 
   /**
    * Sets the color of the embed's left border.
-   * 
+   *
    * @param color The color to set
    */
   public void setColor(String color) {
@@ -197,7 +203,7 @@ public class Embed {
 
   /**
    * Gets the footer of the embed.
-   * 
+   *
    * @return The footer (format: "text,iconUrl")
    */
   public String getFooter() {
@@ -206,7 +212,7 @@ public class Embed {
 
   /**
    * Sets the footer of the embed.
-   * 
+   *
    * @param footer The footer to set (format: "text,iconUrl")
    */
   public void setFooter(String footer) {
@@ -215,7 +221,7 @@ public class Embed {
 
   /**
    * Gets the main image of the embed.
-   * 
+   *
    * @return The image path
    */
   public String getImage() {
@@ -224,7 +230,7 @@ public class Embed {
 
   /**
    * Sets the main image of the embed.
-   * 
+   *
    * @param image The image path to set
    */
   public void setImage(String image) {
@@ -233,7 +239,7 @@ public class Embed {
 
   /**
    * Gets the thumbnail image of the embed.
-   * 
+   *
    * @return The thumbnail image path
    */
   public String getThumbnail() {
@@ -242,7 +248,7 @@ public class Embed {
 
   /**
    * Sets the thumbnail image of the embed.
-   * 
+   *
    * @param thumbnail The thumbnail image path to set
    */
   public void setThumbnail(String thumbnail) {
@@ -251,7 +257,7 @@ public class Embed {
 
   /**
    * Adds a field to the embed.
-   * 
+   *
    * @param data The field data in format "name,value"
    */
   public void addfield(String data) {
@@ -260,7 +266,7 @@ public class Embed {
 
   /**
    * Adds an inline field to the embed.
-   * 
+   *
    * @param data The inline field data in format "name,value"
    */
   public void addInlinefield(String data) {
@@ -268,10 +274,10 @@ public class Embed {
   }
 
   /**
-   * Creates and returns an EmbedBuilder with all the configured properties.
-   * This method constructs a Discord embed using the Javacord EmbedBuilder class,
-   * applying all the properties that have been set in this Embed object.
-   * 
+   * Creates and returns an EmbedBuilder with all the configured properties. This method constructs
+   * a Discord embed using the Javacord EmbedBuilder class, applying all the properties that have
+   * been set in this Embed object.
+   *
    * @return The constructed EmbedBuilder object ready to be sent in a Discord message
    */
   public EmbedBuilder createAndGetEmbed() {

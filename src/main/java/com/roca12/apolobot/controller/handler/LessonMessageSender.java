@@ -14,11 +14,10 @@ import org.javacord.api.entity.message.mention.AllowedMentions;
 import org.javacord.api.entity.message.mention.AllowedMentionsBuilder;
 
 /**
- * Responsible for sending scheduled lesson reminder messages to Discord channels.
- * This class runs a timer that sends reminder messages about class schedules
- * at specific times, depending on whether the bot is running in production
- * or development mode.
- * 
+ * Responsible for sending scheduled lesson reminder messages to Discord channels. This class runs a
+ * timer that sends reminder messages about class schedules at specific times, depending on whether
+ * the bot is running in production or development mode.
+ *
  * @author roca12
  * @version 2025-I
  */
@@ -31,9 +30,9 @@ public class LessonMessageSender {
   private boolean isProd;
 
   /**
-   * Constructor for LessonMessageSender with parameters.
-   * Initializes the Discord API and sets the production mode flag.
-   * 
+   * Constructor for LessonMessageSender with parameters. Initializes the Discord API and sets the
+   * production mode flag.
+   *
    * @param api The Discord API instance
    * @param isProd Whether the bot is running in production mode
    */
@@ -43,8 +42,8 @@ public class LessonMessageSender {
   }
 
   /**
-   * Default constructor for LessonMessageSender.
-   * This constructor is currently empty and marked as a TODO.
+   * Default constructor for LessonMessageSender. This constructor is currently empty and marked as
+   * a TODO.
    */
   public LessonMessageSender() {
     // TODO Auto-generated constructor stub
@@ -52,7 +51,7 @@ public class LessonMessageSender {
 
   /**
    * Gets the Discord API instance.
-   * 
+   *
    * @return The DiscordApi object
    */
   public DiscordApi getApi() {
@@ -61,7 +60,7 @@ public class LessonMessageSender {
 
   /**
    * Sets the Discord API instance.
-   * 
+   *
    * @param api The DiscordApi object to set
    */
   public void setApi(DiscordApi api) {
@@ -70,7 +69,7 @@ public class LessonMessageSender {
 
   /**
    * Checks if the bot is running in production mode.
-   * 
+   *
    * @return true if in production mode, false if in development mode
    */
   public boolean isProd() {
@@ -79,7 +78,7 @@ public class LessonMessageSender {
 
   /**
    * Sets whether the bot is running in production mode.
-   * 
+   *
    * @param isProd true for production mode, false for development mode
    */
   public void setProd(boolean isProd) {
@@ -87,12 +86,12 @@ public class LessonMessageSender {
   }
 
   /**
-   * Sets up a timer to send lesson reminder messages at specific times.
-   * This method creates and starts a background thread that continuously checks
-   * the current time and sends reminder messages when appropriate.
-   * 
-   * In production mode, messages are sent at noon on Mondays during specific months.
-   * In development mode, messages are sent at noon every day during specific months.
+   * Sets up a timer to send lesson reminder messages at specific times. This method creates and
+   * starts a background thread that continuously checks the current time and sends reminder
+   * messages when appropriate.
+   *
+   * <p>In production mode, messages are sent at noon on Mondays during specific months. In
+   * development mode, messages are sent at noon every day during specific months.
    */
   public void setTimer() {
     // Define the months when classes are in session
@@ -158,9 +157,9 @@ public class LessonMessageSender {
   }
 
   /**
-   * Sends lesson reminder messages to all "general" channels in all servers.
-   * This method constructs a message with information about training schedules
-   * and sends it to all channels named "general" that the bot can access.
+   * Sends lesson reminder messages to all "general" channels in all servers. This method constructs
+   * a message with information about training schedules and sends it to all channels named
+   * "general" that the bot can access.
    */
   public void sendMessageLesson() {
     // TODO: falta guardar archivo de fechas y horas

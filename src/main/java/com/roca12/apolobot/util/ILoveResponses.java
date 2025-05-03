@@ -8,10 +8,9 @@ import java.util.List;
 import java.util.Random;
 
 /**
- * Utility class for handling responses to "I love" messages.
- * This class reads a list of response phrases from a file and
- * provides a method to get a random phrase from the list.
- * 
+ * Utility class for handling responses to "I love" messages. This class reads a list of response
+ * phrases from a file and provides a method to get a random phrase from the list.
+ *
  * @author roca12
  * @version 2025-I
  */
@@ -20,10 +19,9 @@ public class ILoveResponses {
   private static List<String> phrases;
 
   /**
-   * Gets a random response phrase from the list.
-   * This method reads the phrases from the file each time it's called,
-   * ensuring that any updates to the file are immediately available.
-   * 
+   * Gets a random response phrase from the list. This method reads the phrases from the file each
+   * time it's called, ensuring that any updates to the file are immediately available.
+   *
    * @return A randomly selected response phrase
    * @throws RuntimeException If there is an error reading the file
    */

@@ -5,10 +5,10 @@ import org.javacord.api.DiscordApi;
 import org.javacord.api.interaction.*;
 
 /**
- * Responsable de construir y definir comandos de barra diagonal para el bot de Discord.
- * Esta clase crea todas las definiciones de comandos de barra diagonal que se registrarán en Discord.
- * Cada comando se define con un nombre, descripción y parámetros opcionales.
- * 
+ * Responsable de construir y definir comandos de barra diagonal para el bot de Discord. Esta clase
+ * crea todas las definiciones de comandos de barra diagonal que se registrarán en Discord. Cada
+ * comando se define con un nombre, descripción y parámetros opcionales.
+ *
  * @author roca12
  * @version 2025-I
  */
@@ -24,9 +24,9 @@ public class SlashBuilder {
   private Properties prop = new Properties();
 
   /**
-   * Constructor para SlashBuilder.
-   * Inicializa la API de Discord y el conjunto de constructores de comandos de barra diagonal.
-   * 
+   * Constructor para SlashBuilder. Inicializa la API de Discord y el conjunto de constructores de
+   * comandos de barra diagonal.
+   *
    * @param api La instancia de la API de Discord
    */
   public SlashBuilder(DiscordApi api) {
@@ -35,10 +35,10 @@ public class SlashBuilder {
   }
 
   /**
-   * Inicializa y define todos los comandos de barra diagonal para el bot de Discord.
-   * Este método crea definiciones para comandos como ayuda, ping, test,
-   * conteo de usuarios, gestión de entrenamientos, gestión de eventos y traducción.
-   * 
+   * Inicializa y define todos los comandos de barra diagonal para el bot de Discord. Este método
+   * crea definiciones para comandos como ayuda, ping, test, conteo de usuarios, gestión de
+   * entrenamientos, gestión de eventos y traducción.
+   *
    * @return Un conjunto de objetos SlashCommandBuilder que representan todos los comandos
    */
   public Set<SlashCommandBuilder> initSlashCommands() {
@@ -138,7 +138,7 @@ public class SlashBuilder {
 
   /**
    * Obtiene el conjunto de constructores de comandos de barra diagonal.
-   * 
+   *
    * @return El conjunto de objetos SlashCommandBuilder
    */
   public Set<SlashCommandBuilder> getBuilders() {
@@ -147,7 +147,7 @@ public class SlashBuilder {
 
   /**
    * Establece el conjunto de constructores de comandos de barra diagonal.
-   * 
+   *
    * @param builders El conjunto de objetos SlashCommandBuilder a establecer
    */
   public void setBuilders(Set<SlashCommandBuilder> builders) {
@@ -156,7 +156,7 @@ public class SlashBuilder {
 
   /**
    * Obtiene el objeto de propiedades.
-   * 
+   *
    * @return El objeto Properties
    */
   public Properties getProp() {
@@ -165,7 +165,7 @@ public class SlashBuilder {
 
   /**
    * Establece el objeto de propiedades.
-   * 
+   *
    * @param prop El objeto Properties a establecer
    */
   public void setProp(Properties prop) {
@@ -174,7 +174,7 @@ public class SlashBuilder {
 
   /**
    * Obtiene la instancia de la API de Discord.
-   * 
+   *
    * @return El objeto DiscordApi
    */
   public DiscordApi getApi() {
@@ -183,7 +183,7 @@ public class SlashBuilder {
 
   /**
    * Establece la instancia de la API de Discord.
-   * 
+   *
    * @param api El objeto DiscordApi a establecer
    */
   public void setApi(DiscordApi api) {
