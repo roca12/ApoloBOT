@@ -8,11 +8,10 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 
 /**
- * Service class for managing Training entities.
- * This class provides business logic for creating, saving, and deleting
- * training sessions. It acts as an intermediary between the controllers
- * and the repository layer.
- * 
+ * Service class for managing Training entities. This class provides business logic for creating,
+ * saving, and deleting training sessions. It acts as an intermediary between the controllers and
+ * the repository layer.
+ *
  * @author roca12
  * @version 2025-I
  */
@@ -22,17 +21,17 @@ public class TrainingService {
   private TrainingRepository trainingRepository;
 
   /**
-   * Constructor for TrainingService.
-   * Initializes the training repository from the application context.
+   * Constructor for TrainingService. Initializes the training repository from the application
+   * context.
    */
   public TrainingService() {
     trainingRepository = ApplicationContextHolder.getContext().getBean(TrainingRepository.class);
   }
 
   /**
-   * Saves a training session to the database.
-   * This method can be used to create a new training session or update an existing one.
-   * 
+   * Saves a training session to the database. This method can be used to create a new training
+   * session or update an existing one.
+   *
    * @param training The Training entity to save
    */
   public void save(Training training) {
@@ -40,10 +39,9 @@ public class TrainingService {
   }
 
   /**
-   * Deletes training sessions with the specified date and time.
-   * This method finds all training sessions with the exact date and time
-   * and deletes them from the database.
-   * 
+   * Deletes training sessions with the specified date and time. This method finds all training
+   * sessions with the exact date and time and deletes them from the database.
+   *
    * @param localDateTime The date and time of the training sessions to delete
    * @return true if the deletion was successful, false if an error occurred
    */

@@ -6,10 +6,9 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 /**
- * Clase modelo que representa una entidad ReRunApolo.
- * Esta clase está mapeada a la colección "rerunapolo" en MongoDB
- * y almacena información sobre eventos de reinicio del bot.
- * 
+ * Clase modelo que representa una entidad ReRunApolo. Esta clase está mapeada a la colección
+ * "rerunapolo" en MongoDB y almacena información sobre eventos de reinicio del bot.
+ *
  * @author roca12
  * @version 2025-I
  */
@@ -26,8 +25,7 @@ public class ReRunApolo {
   @NotBlank private String reRunKind;
 
   /**
-   * Constructor por defecto.
-   * Requerido por Spring Data MongoDB para la instanciación de objetos.
+   * Constructor por defecto. Requerido por Spring Data MongoDB para la instanciación de objetos.
    */
   public ReRunApolo() {
     // TODO Auto-generated constructor stub
@@ -35,7 +33,7 @@ public class ReRunApolo {
 
   /**
    * Constructor parametrizado para crear un ReRunApolo con todas las propiedades.
-   * 
+   *
    * @param id El identificador único
    * @param reRunDate La fecha y hora del reinicio
    * @param reRunKind El tipo o razón del reinicio
@@ -49,7 +47,7 @@ public class ReRunApolo {
 
   /**
    * Obtiene el identificador único.
-   * 
+   *
    * @return El ID
    */
   public String getId() {
@@ -58,7 +56,7 @@ public class ReRunApolo {
 
   /**
    * Establece el identificador único.
-   * 
+   *
    * @param id El ID a establecer
    */
   public void setId(String id) {
@@ -67,7 +65,7 @@ public class ReRunApolo {
 
   /**
    * Obtiene la fecha y hora del reinicio.
-   * 
+   *
    * @return La fecha de reinicio
    */
   public Date getReRunDate() {
@@ -76,7 +74,7 @@ public class ReRunApolo {
 
   /**
    * Establece la fecha y hora del reinicio.
-   * 
+   *
    * @param reRunDate La fecha de reinicio a establecer
    */
   public void setReRunDate(Date reRunDate) {
@@ -85,7 +83,7 @@ public class ReRunApolo {
 
   /**
    * Obtiene el tipo o razón del reinicio.
-   * 
+   *
    * @return El tipo de reinicio
    */
   public String getReRunKind() {
@@ -94,7 +92,7 @@ public class ReRunApolo {
 
   /**
    * Establece el tipo o razón del reinicio.
-   * 
+   *
    * @param reRunKind El tipo de reinicio a establecer
    */
   public void setReRunKind(String reRunKind) {
@@ -103,7 +101,7 @@ public class ReRunApolo {
 
   /**
    * Devuelve una representación en cadena del objeto ReRunApolo.
-   * 
+   *
    * @return Una cadena que contiene todas las propiedades del objeto
    */
   @Override

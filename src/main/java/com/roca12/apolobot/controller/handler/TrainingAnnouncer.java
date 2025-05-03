@@ -10,11 +10,10 @@ import java.util.TimerTask;
 import org.javacord.api.DiscordApi;
 
 /**
- * Responsible for announcing upcoming training sessions in Discord channels.
- * This class periodically checks for upcoming training sessions and sends
- * announcement messages to notify users about them. It uses a timer to
- * check for upcoming sessions every minute.
- * 
+ * Responsible for announcing upcoming training sessions in Discord channels. This class
+ * periodically checks for upcoming training sessions and sends announcement messages to notify
+ * users about them. It uses a timer to check for upcoming sessions every minute.
+ *
  * @author roca12
  * @version 2025-I
  */
@@ -27,10 +26,9 @@ public class TrainingAnnouncer {
   private DiscordApi api;
 
   /**
-   * Constructor for TrainingAnnouncer.
-   * Initializes the Discord API, gets the training repository from the application context,
-   * and schedules the announcement timer.
-   * 
+   * Constructor for TrainingAnnouncer. Initializes the Discord API, gets the training repository
+   * from the application context, and schedules the announcement timer.
+   *
    * @param api The Discord API instance
    */
   public TrainingAnnouncer(DiscordApi api) {
@@ -40,9 +38,9 @@ public class TrainingAnnouncer {
   }
 
   /**
-   * Schedules the periodic announcement task.
-   * This method sets up a timer that runs the announce method every minute.
-   * The timer runs as a daemon thread, so it won't prevent the application from exiting.
+   * Schedules the periodic announcement task. This method sets up a timer that runs the announce
+   * method every minute. The timer runs as a daemon thread, so it won't prevent the application
+   * from exiting.
    */
   private void scheduleAnnouncements() {
     // Create a daemon timer
@@ -55,17 +53,16 @@ public class TrainingAnnouncer {
             announce();
           }
         },
-        0,  // Start immediately
-        60000);  // Run every minute
+        0, // Start immediately
+        60000); // Run every minute
   }
 
   /**
-   * Announces upcoming training sessions.
-   * This method checks for training sessions that are scheduled to start within the next hour
-   * and haven't been announced yet. It then sends announcement messages to the system channel
-   * of each server, mentioning relevant roles.
-   * 
-   * After sending the announcements, it marks the training sessions as announced to prevent
+   * Announces upcoming training sessions. This method checks for training sessions that are
+   * scheduled to start within the next hour and haven't been announced yet. It then sends
+   * announcement messages to the system channel of each server, mentioning relevant roles.
+   *
+   * <p>After sending the announcements, it marks the training sessions as announced to prevent
    * duplicate announcements.
    */
   private void announce() {

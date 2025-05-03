@@ -10,14 +10,14 @@ import org.javacord.api.DiscordApiBuilder;
 import org.springframework.core.io.ClassPathResource;
 
 /**
- * Clase controladora principal para el bot de Discord ApoloBOT.
- * Esta clase es responsable de inicializar y configurar la API de Discord,
- * configurar los manejadores de comandos, los oyentes de mensajes y las tareas programadas.
- * 
- * El bot puede ejecutarse en modo de producción o desarrollo, controlado por la
- * bandera PRODUCTION_STATE. En modo de producción, utiliza el token de producción,
- * mientras que en modo de desarrollo, utiliza el token de prueba.
- * 
+ * Clase controladora principal para el bot de Discord ApoloBOT. Esta clase es responsable de
+ * inicializar y configurar la API de Discord, configurar los manejadores de comandos, los oyentes
+ * de mensajes y las tareas programadas.
+ *
+ * <p>El bot puede ejecutarse en modo de producción o desarrollo, controlado por la bandera
+ * PRODUCTION_STATE. En modo de producción, utiliza el token de producción, mientras que en modo de
+ * desarrollo, utiliza el token de prueba.
+ *
  * @author roca12
  * @version 2025-I
  */
@@ -50,18 +50,15 @@ public class AplMain {
   /** Service for ReRunApolo operations */
   private ReRunApoloService rraDao;
 
-  /**
-   * Constructor para AplMain.
-   * Inicializa el ReRunApoloService.
-   */
+  /** Constructor para AplMain. Inicializa el ReRunApoloService. */
   public AplMain() {
     rraDao = new ReRunApoloService();
   }
 
   /**
-   * Método principal para ejecutar el bot de Discord.
-   * Este método inicializa todos los componentes necesarios, configura los manejadores de comandos,
-   * los oyentes de mensajes y las tareas programadas.
+   * Método principal para ejecutar el bot de Discord. Este método inicializa todos los componentes
+   * necesarios, configura los manejadores de comandos, los oyentes de mensajes y las tareas
+   * programadas.
    */
   public void run() {
     // Load configuration and initialize critical components
@@ -100,9 +97,9 @@ public class AplMain {
 
   /**
    * Carga la configuración desde el archivo de propiedades e inicializa los componentes críticos.
-   * Este método carga el token de Discord basado en el estado de producción,
-   * inicializa la API de Discord y configura todos los manejadores.
-   * 
+   * Este método carga el token de Discord basado en el estado de producción, inicializa la API de
+   * Discord y configura todos los manejadores.
+   *
    * @return true si la inicialización fue exitosa, false en caso contrario
    */
   private boolean loadAndCheckCriticals() {
@@ -145,17 +142,17 @@ public class AplMain {
   }
 
   /**
-   * Imprime información sobre el bot de Discord.
-   * Actualmente, este método solo imprime el ID del cliente.
+   * Imprime información sobre el bot de Discord. Actualmente, este método solo imprime el ID del
+   * cliente.
    */
   private void printInfo() {
     System.out.println("Client:" + api.getClientId());
   }
 
   /**
-   * Verifica si se cumplen todos los requisitos para que el bot se ejecute.
-   * Actualmente, este método solo verifica si el token no está en blanco.
-   * 
+   * Verifica si se cumplen todos los requisitos para que el bot se ejecute. Actualmente, este
+   * método solo verifica si el token no está en blanco.
+   *
    * @return true si se cumplen todos los requisitos, false en caso contrario
    */
   private boolean checkReqs() {
@@ -168,9 +165,9 @@ public class AplMain {
   }
 
   /**
-   * Prueba la conexión de MongoDB creando un nuevo registro ReRunApolo.
-   * Este método se llama durante la inicialización para asegurar que la
-   * conexión de MongoDB esté funcionando correctamente.
+   * Prueba la conexión de MongoDB creando un nuevo registro ReRunApolo. Este método se llama
+   * durante la inicialización para asegurar que la conexión de MongoDB esté funcionando
+   * correctamente.
    */
   private void testMongoDB() {
     rraDao.createNewReRun();

@@ -14,10 +14,10 @@ import org.javacord.api.listener.message.MessageCreateListener;
 import org.springframework.core.io.ClassPathResource;
 
 /**
- * Responsible for listening to and processing messages in the Discord server.
- * This class primarily handles content moderation by filtering messages
- * that contain inappropriate language (bad words) and removing them.
- * 
+ * Responsible for listening to and processing messages in the Discord server. This class primarily
+ * handles content moderation by filtering messages that contain inappropriate language (bad words)
+ * and removing them.
+ *
  * @author roca12
  * @version 2025-I
  */
@@ -39,9 +39,8 @@ public class MessageListener implements MessageCreateListener {
   private Properties prop = new Properties();
 
   /**
-   * Constructor for MessageListener.
-   * Initializes the Discord API and loads the list of bad words.
-   * 
+   * Constructor for MessageListener. Initializes the Discord API and loads the list of bad words.
+   *
    * @param api The Discord API instance
    */
   public MessageListener(DiscordApi api) {
@@ -51,11 +50,11 @@ public class MessageListener implements MessageCreateListener {
   }
 
   /**
-   * Handles message creation events in Discord.
-   * This method is called whenever a new message is sent in a channel the bot can see.
-   * It filters out messages from bots and checks if the message contains inappropriate language.
-   * If bad words are found, it warns the user and deletes the message.
-   * 
+   * Handles message creation events in Discord. This method is called whenever a new message is
+   * sent in a channel the bot can see. It filters out messages from bots and checks if the message
+   * contains inappropriate language. If bad words are found, it warns the user and deletes the
+   * message.
+   *
    * @param event The message creation event
    */
   @Override
@@ -89,10 +88,9 @@ public class MessageListener implements MessageCreateListener {
   }
 
   /**
-   * Loads the list of bad words from a file.
-   * This method reads the badwords.txt file from the resources directory
-   * and populates the badWords list with the words found in the file.
-   * Each word is converted to lowercase for case-insensitive comparison.
+   * Loads the list of bad words from a file. This method reads the badwords.txt file from the
+   * resources directory and populates the badWords list with the words found in the file. Each word
+   * is converted to lowercase for case-insensitive comparison.
    */
   private void loadBadWords() {
     try {
@@ -117,11 +115,10 @@ public class MessageListener implements MessageCreateListener {
   }
 
   /**
-   * Checks if a message contains any bad words.
-   * This method splits the message into words and checks each word
-   * against the list of bad words. If any word matches, the method
-   * returns true, indicating that the message should be deleted.
-   * 
+   * Checks if a message contains any bad words. This method splits the message into words and
+   * checks each word against the list of bad words. If any word matches, the method returns true,
+   * indicating that the message should be deleted.
+   *
    * @param msg The message content to check
    * @return true if the message contains bad words, false otherwise
    */
@@ -132,17 +129,17 @@ public class MessageListener implements MessageCreateListener {
     // Check each word against the bad words list
     for (String word : words) {
       if (badWords.contains(word)) {
-        return true;  // Bad word found
+        return true; // Bad word found
       } else {
         continue;
       }
     }
-    return false;  // No bad words found
+    return false; // No bad words found
   }
 
   /**
    * Gets the list of bad words.
-   * 
+   *
    * @return The ArrayList of bad words
    */
   public ArrayList<String> getBadWords() {
@@ -151,7 +148,7 @@ public class MessageListener implements MessageCreateListener {
 
   /**
    * Sets the list of bad words.
-   * 
+   *
    * @param badWords The ArrayList of bad words to set
    */
   public void setBadWords(ArrayList<String> badWords) {
@@ -160,7 +157,7 @@ public class MessageListener implements MessageCreateListener {
 
   /**
    * Gets the properties object.
-   * 
+   *
    * @return The Properties object
    */
   public Properties getProp() {
@@ -169,7 +166,7 @@ public class MessageListener implements MessageCreateListener {
 
   /**
    * Sets the properties object.
-   * 
+   *
    * @param prop The Properties object to set
    */
   public void setProp(Properties prop) {
@@ -178,7 +175,7 @@ public class MessageListener implements MessageCreateListener {
 
   /**
    * Gets the Discord API instance.
-   * 
+   *
    * @return The DiscordApi object
    */
   public DiscordApi getApi() {
@@ -187,7 +184,7 @@ public class MessageListener implements MessageCreateListener {
 
   /**
    * Sets the Discord API instance.
-   * 
+   *
    * @param api The DiscordApi object to set
    */
   public void setApi(DiscordApi api) {
@@ -196,7 +193,7 @@ public class MessageListener implements MessageCreateListener {
 
   /**
    * Gets the file reference.
-   * 
+   *
    * @return The File object
    */
   public File getFile() {
@@ -205,7 +202,7 @@ public class MessageListener implements MessageCreateListener {
 
   /**
    * Sets the file reference.
-   * 
+   *
    * @param file The File object to set
    */
   public void setFile(File file) {
@@ -214,7 +211,7 @@ public class MessageListener implements MessageCreateListener {
 
   /**
    * Gets the scanner object.
-   * 
+   *
    * @return The Scanner object
    */
   public Scanner getSc() {
@@ -223,7 +220,7 @@ public class MessageListener implements MessageCreateListener {
 
   /**
    * Sets the scanner object.
-   * 
+   *
    * @param sc The Scanner object to set
    */
   public void setSc(Scanner sc) {

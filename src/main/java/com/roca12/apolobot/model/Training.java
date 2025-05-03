@@ -5,11 +5,10 @@ import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 /**
- * Represents a training session in the application.
- * This class is a MongoDB document that stores information about training sessions,
- * including the coach's name, the date and time of the training, the training name,
- * and whether the training has been announced.
- * 
+ * Represents a training session in the application. This class is a MongoDB document that stores
+ * information about training sessions, including the coach's name, the date and time of the
+ * training, the training name, and whether the training has been announced.
+ *
  * @author roca12
  * @version 2025-I
  */
@@ -28,10 +27,9 @@ public class Training {
   @Indexed private Boolean announced;
 
   /**
-   * Constructor for creating a new Training.
-   * Initializes a training session with the given coach, date/time, and name.
-   * The announced flag is set to false by default.
-   * 
+   * Constructor for creating a new Training. Initializes a training session with the given coach,
+   * date/time, and name. The announced flag is set to false by default.
+   *
    * @param coach The name of the coach conducting the training
    * @param dateTime The date and time when the training will take place
    * @param trainingName The name or title of the training session
@@ -45,7 +43,7 @@ public class Training {
 
   /**
    * Gets the name of the coach conducting the training.
-   * 
+   *
    * @return The coach's name
    */
   public String getCoach() {
@@ -54,7 +52,7 @@ public class Training {
 
   /**
    * Sets the name of the coach conducting the training.
-   * 
+   *
    * @param coach The coach's name to set
    */
   public void setCoach(String coach) {
@@ -63,7 +61,7 @@ public class Training {
 
   /**
    * Gets the date and time when the training will take place.
-   * 
+   *
    * @return The LocalDateTime object representing the training date and time
    */
   public LocalDateTime getDateTime() {
@@ -72,7 +70,7 @@ public class Training {
 
   /**
    * Sets the date and time when the training will take place.
-   * 
+   *
    * @param dateTime The LocalDateTime object to set
    */
   public void setDateTime(LocalDateTime dateTime) {
@@ -81,7 +79,7 @@ public class Training {
 
   /**
    * Gets the name or title of the training session.
-   * 
+   *
    * @return The training name
    */
   public String getTrainingName() {
@@ -90,7 +88,7 @@ public class Training {
 
   /**
    * Sets the name or title of the training session.
-   * 
+   *
    * @param trainingName The training name to set
    */
   public void setTrainingName(String trainingName) {
@@ -99,7 +97,7 @@ public class Training {
 
   /**
    * Checks if the training has been announced.
-   * 
+   *
    * @return true if the training has been announced, false otherwise
    */
   public Boolean getAnnounced() {
@@ -108,7 +106,7 @@ public class Training {
 
   /**
    * Sets whether the training has been announced.
-   * 
+   *
    * @param announced true to mark as announced, false otherwise
    */
   public void setAnnounced(Boolean announced) {

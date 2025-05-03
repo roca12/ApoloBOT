@@ -34,11 +34,11 @@ import org.javacord.api.interaction.SlashCommandInteractionOption;
 import org.springframework.core.io.ClassPathResource;
 
 /**
- * Responsible for handling and responding to slash commands in the Discord bot.
- * This class listens for slash command interactions and executes the appropriate
- * action based on the command received. It handles commands for help, ping, test,
- * user count, training management, event management, and translation.
- * 
+ * Responsible for handling and responding to slash commands in the Discord bot. This class listens
+ * for slash command interactions and executes the appropriate action based on the command received.
+ * It handles commands for help, ping, test, user count, training management, event management, and
+ * translation.
+ *
  * @author roca12
  * @version 2025-I
  */
@@ -72,9 +72,9 @@ public class SlashListener {
   private String BOT_VERSION = "2025-I";
 
   /**
-   * Constructor for SlashListener.
-   * Initializes the Discord API, training service, and loads the list of bad words.
-   * 
+   * Constructor for SlashListener. Initializes the Discord API, training service, and loads the
+   * list of bad words.
+   *
    * @param api The Discord API instance
    */
   public SlashListener(DiscordApi api) {
@@ -85,9 +85,9 @@ public class SlashListener {
   }
 
   /**
-   * Sets up the listener for slash command interactions.
-   * This method registers a listener that processes all slash commands
-   * and routes them to the appropriate handler method based on the command name.
+   * Sets up the listener for slash command interactions. This method registers a listener that
+   * processes all slash commands and routes them to the appropriate handler method based on the
+   * command name.
    */
   public void handleSlashComms() {
     api.addSlashCommandCreateListener(
@@ -169,10 +169,9 @@ public class SlashListener {
   }
 
   /**
-   * Handles the "traducir" command to translate text to Spanish.
-   * This method takes the text provided by the user, checks it for inappropriate content,
-   * and then uses the Google Translate API to translate it to Spanish.
-   * The translated text is then sent back to the user.
+   * Handles the "traducir" command to translate text to Spanish. This method takes the text
+   * provided by the user, checks it for inappropriate content, and then uses the Google Translate
+   * API to translate it to Spanish. The translated text is then sent back to the user.
    */
   // TODO: probar variables de entorno
   @SuppressWarnings("deprecation")
@@ -206,9 +205,8 @@ public class SlashListener {
   }
 
   /**
-   * Handles the "test" command to verify system functionality.
-   * This method tests the critical systems of the bot, including the database connection,
-   * and reports the status back to the user.
+   * Handles the "test" command to verify system functionality. This method tests the critical
+   * systems of the bot, including the database connection, and reports the status back to the user.
    */
   public void showTest() {
     ReRunApoloService rraDao = new ReRunApoloService();
@@ -239,10 +237,10 @@ public class SlashListener {
   }
 
   /**
-   * Handles the "traducirpdf" command to translate PDF content to Spanish.
-   * This method takes a PDF file uploaded by the user, extracts its text content,
-   * translates it to Spanish using the Google Translate API, and then returns
-   * the translated text either directly or as a text file attachment if it's too long.
+   * Handles the "traducirpdf" command to translate PDF content to Spanish. This method takes a PDF
+   * file uploaded by the user, extracts its text content, translates it to Spanish using the Google
+   * Translate API, and then returns the translated text either directly or as a text file
+   * attachment if it's too long.
    */
   public void processPDF() {
     // Get the PDF attachment from the command options
@@ -303,16 +301,16 @@ public class SlashListener {
   }
 
   /**
-   * Handles the "ping" command.
-   * This method responds with a simple "Pong!" message to verify that the bot is responsive.
+   * Handles the "ping" command. This method responds with a simple "Pong!" message to verify that
+   * the bot is responsive.
    */
   public void showPing() {
     slashCommandInteraction.createImmediateResponder().setContent("Pong!").respond();
   }
 
   /**
-   * Handles the "teamo" command.
-   * This method responds with a random love-related phrase from the ILoveResponses utility.
+   * Handles the "teamo" command. This method responds with a random love-related phrase from the
+   * ILoveResponses utility.
    */
   public void iLoveYou() {
     slashCommandInteraction
@@ -322,10 +320,10 @@ public class SlashListener {
   }
 
   /**
-   * Handles the "entrenamiento" command for managing training sessions.
-   * This method processes both announcing new training sessions and canceling existing ones.
-   * It validates the date and time format, ensures the date is in the future,
-   * and performs the appropriate action based on the subcommand (anunciar or cancelar).
+   * Handles the "entrenamiento" command for managing training sessions. This method processes both
+   * announcing new training sessions and canceling existing ones. It validates the date and time
+   * format, ensures the date is in the future, and performs the appropriate action based on the
+   * subcommand (anunciar or cancelar).
    */
   public void showTraining() {
     // Define the date-time formatter for parsing user input
@@ -443,9 +441,8 @@ public class SlashListener {
   }
 
   /**
-   * Handles the "numerousuarios" command.
-   * This method counts and displays the number of users in each server
-   * that the bot is a member of.
+   * Handles the "numerousuarios" command. This method counts and displays the number of users in
+   * each server that the bot is a member of.
    */
   public void showNumeroUsuarios() {
     Set<Server> servers = api.getServers();
@@ -456,9 +453,8 @@ public class SlashListener {
   }
 
   /**
-   * Handles the "ayuda" command.
-   * This method creates and displays an embed message containing a list
-   * of all available slash commands with their descriptions.
+   * Handles the "ayuda" command. This method creates and displays an embed message containing a
+   * list of all available slash commands with their descriptions.
    */
   public void showAyuda() {
     embed = new Embed();
@@ -485,9 +481,8 @@ public class SlashListener {
   }
 
   /**
-   * Responds to an invalid command.
-   * This method sends an ephemeral message (only visible to the command user)
-   * indicating that the command is not valid.
+   * Responds to an invalid command. This method sends an ephemeral message (only visible to the
+   * command user) indicating that the command is not valid.
    */
   public void notExist() {
     slashCommandInteraction
@@ -498,9 +493,9 @@ public class SlashListener {
   }
 
   /**
-   * Responds when a user without coach permissions tries to use a restricted command.
-   * This method sends an ephemeral message (only visible to the command user)
-   * indicating that they don't have permission to use the command.
+   * Responds when a user without coach permissions tries to use a restricted command. This method
+   * sends an ephemeral message (only visible to the command user) indicating that they don't have
+   * permission to use the command.
    */
   public void notCoach() {
     slashCommandInteraction
@@ -511,9 +506,8 @@ public class SlashListener {
   }
 
   /**
-   * Responds to a command that is not yet implemented.
-   * This method sends a message with buttons indicating that the
-   * requested feature is not yet available.
+   * Responds to a command that is not yet implemented. This method sends a message with buttons
+   * indicating that the requested feature is not yet available.
    */
   public void notImplementedYet() {
     slashCommandInteraction
@@ -528,9 +522,8 @@ public class SlashListener {
   }
 
   /**
-   * Displays a message with interactive buttons.
-   * This method sends a message with three different types of buttons
-   * that the user can interact with.
+   * Displays a message with interactive buttons. This method sends a message with three different
+   * types of buttons that the user can interact with.
    */
   public void showButtons() {
     slashCommandInteraction
@@ -545,10 +538,9 @@ public class SlashListener {
   }
 
   /**
-   * Loads the list of bad words from a file.
-   * This method reads the badwords.txt file from the resources directory
-   * and populates the badWords list with the words found in the file.
-   * Each word is converted to lowercase for case-insensitive comparison.
+   * Loads the list of bad words from a file. This method reads the badwords.txt file from the
+   * resources directory and populates the badWords list with the words found in the file. Each word
+   * is converted to lowercase for case-insensitive comparison.
    */
   private void loadBadWords() {
     try {
@@ -569,10 +561,9 @@ public class SlashListener {
   }
 
   /**
-   * Checks if a message contains any bad words.
-   * This method splits the message into words and checks each word
-   * against the list of bad words.
-   * 
+   * Checks if a message contains any bad words. This method splits the message into words and
+   * checks each word against the list of bad words.
+   *
    * @param msg The message content to check
    * @return true if the message contains bad words, false otherwise
    */
@@ -590,7 +581,7 @@ public class SlashListener {
 
   /**
    * Gets the properties object.
-   * 
+   *
    * @return The Properties object
    */
   public Properties getProp() {
@@ -599,7 +590,7 @@ public class SlashListener {
 
   /**
    * Sets the properties object.
-   * 
+   *
    * @param prop The Properties object to set
    */
   public void setProp(Properties prop) {
@@ -608,7 +599,7 @@ public class SlashListener {
 
   /**
    * Gets the current slash command interaction.
-   * 
+   *
    * @return The SlashCommandInteraction object
    */
   public SlashCommandInteraction getSlashCommandInteraction() {
@@ -617,7 +608,7 @@ public class SlashListener {
 
   /**
    * Sets the current slash command interaction.
-   * 
+   *
    * @param slashCommandInteraction The SlashCommandInteraction object to set
    */
   public void setSlashCommandInteraction(SlashCommandInteraction slashCommandInteraction) {
@@ -626,7 +617,7 @@ public class SlashListener {
 
   /**
    * Gets the embed message builder.
-   * 
+   *
    * @return The Embed object
    */
   public Embed getEmbed() {
@@ -635,7 +626,7 @@ public class SlashListener {
 
   /**
    * Sets the embed message builder.
-   * 
+   *
    * @param embed The Embed object to set
    */
   public void setEmbed(Embed embed) {
@@ -644,7 +635,7 @@ public class SlashListener {
 
   /**
    * Gets the Discord API instance.
-   * 
+   *
    * @return The DiscordApi object
    */
   public DiscordApi getApi() {
@@ -653,7 +644,7 @@ public class SlashListener {
 
   /**
    * Sets the Discord API instance.
-   * 
+   *
    * @param api The DiscordApi object to set
    */
   public void setApi(DiscordApi api) {
@@ -662,7 +653,7 @@ public class SlashListener {
 
   /**
    * Gets the Google Translate API key.
-   * 
+   *
    * @return The API key string
    */
   public String getTraductorApiKey() {
@@ -671,7 +662,7 @@ public class SlashListener {
 
   /**
    * Sets the Google Translate API key.
-   * 
+   *
    * @param traductorApiKey The API key string to set
    */
   public void setTraductorApiKey(String traductorApiKey) {
