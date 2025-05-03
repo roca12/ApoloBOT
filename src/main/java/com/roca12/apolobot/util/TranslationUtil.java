@@ -84,9 +84,9 @@ public class TranslationUtil {
       String textToTranslate = line;
 
       if (line.contains("*")) {
-        prefix = line.substring(0, line.indexOf("*") + 1);
-        if (line.length() > line.indexOf("*") + 1) {
-          textToTranslate = line.substring(line.indexOf("*") + 1);
+        prefix = line.substring(0, line.indexOf('*') + 1);
+        if (line.length() > line.indexOf('*') + 1) {
+          textToTranslate = line.substring(line.indexOf('*') + 1);
         } else {
           textToTranslate = "";
         }
