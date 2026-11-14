@@ -489,7 +489,11 @@ public class SlashListener {
                 List<String> chunks = splitMessage(out, 2000);
                 updater.setContent(chunks.get(0)).update().join();
                 for (int i = 1; i < chunks.size(); i++) {
-                  interaction.createFollowupMessageBuilder().setContent(chunks.get(i)).send().join();
+                  interaction
+                      .createFollowupMessageBuilder()
+                      .setContent(chunks.get(i))
+                      .send()
+                      .join();
                 }
               } catch (Exception e) {
                 e.printStackTrace();
@@ -503,8 +507,7 @@ public class SlashListener {
             });
   }
 
-  private String formatRangos(
-      Server server, Map<String, List<User>> porRango) {
+  private String formatRangos(Server server, Map<String, List<User>> porRango) {
     StringBuilder out = new StringBuilder();
     for (Map.Entry<String, List<User>> entry : porRango.entrySet()) {
       out.append("**")
@@ -633,8 +636,7 @@ public class SlashListener {
               .addInlineField("Resueltos", e.resueltos() + " / " + marcador.letras().size())
               .addInlineField("Penalidad", e.penalidad() + " min")
               .addField("Problemas", letras.toString().trim() + "\n" + estados.toString().trim())
-              .addField(
-                  "Detalle", detalle.length() > 0 ? detalle.toString() : "Todavía sin envíos")
+              .addField("Detalle", detalle.length() > 0 ? detalle.toString() : "Todavía sin envíos")
               .setFooter(e.usuario() + " · sede " + e.sede()));
     }
     return embeds;
