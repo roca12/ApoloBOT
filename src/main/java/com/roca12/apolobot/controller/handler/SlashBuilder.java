@@ -133,6 +133,21 @@ public class SlashBuilder {
                 SlashCommandOption.createAttachmentOption(
                     "pdf", "El PDF que va a ser traducido.", true)));
 
+    // Ranks command - Lists members by rank
+    builders.add(
+        new SlashCommandBuilder()
+            .setName("rangos")
+            .setDescription("Lista los miembros del servidor por rango"));
+
+    // CCPL command - Shows the CCPL results of a university
+    builders.add(
+        new SlashCommandBuilder()
+            .setName("ccpl")
+            .setDescription("Muestra los resultados de los equipos de una universidad en la CCPL")
+            .addOption(
+                SlashCommandOption.createStringOption(
+                    "universidad", "Por defecto Universidad El Bosque", false)));
+
     return builders;
   }
 

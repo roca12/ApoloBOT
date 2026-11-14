@@ -6,9 +6,12 @@ import com.google.cloud.translate.Translation;
 import com.roca12.apolobot.model.Embed;
 import com.roca12.apolobot.model.Training;
 import com.roca12.apolobot.service.ReRunApoloService;
+import com.roca12.apolobot.service.RoleService;
 import com.roca12.apolobot.service.TrainingService;
+import com.roca12.apolobot.util.BocaScoreUtil;
 import com.roca12.apolobot.util.ILoveResponses;
 import com.roca12.apolobot.util.PDFProcessor;
+import java.awt.Color;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
@@ -16,6 +19,9 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import java.util.Properties;
 import java.util.Scanner;
@@ -26,8 +32,10 @@ import org.javacord.api.entity.Attachment;
 import org.javacord.api.entity.message.MessageFlag;
 import org.javacord.api.entity.message.component.ActionRow;
 import org.javacord.api.entity.message.component.Button;
+import org.javacord.api.entity.message.embed.EmbedBuilder;
 import org.javacord.api.entity.message.mention.AllowedMentionsBuilder;
 import org.javacord.api.entity.server.Server;
+import org.javacord.api.entity.user.User;
 import org.javacord.api.interaction.SlashCommand;
 import org.javacord.api.interaction.SlashCommandInteraction;
 import org.javacord.api.interaction.SlashCommandInteractionOption;
@@ -46,6 +54,9 @@ public class SlashListener {
 
   /** Service for managing training sessions */
   private TrainingService trainingService;
+
+  /** Service for extracting member ranks (roles) */
+  private RoleService roleService;
 
   /** Current slash command interaction being processed */
   private SlashCommandInteraction slashCommandInteraction;
@@ -80,6 +91,7 @@ public class SlashListener {
   public SlashListener(DiscordApi api) {
     this.api = api;
     trainingService = new TrainingService();
+    roleService = new RoleService();
     badWords = new ArrayList<>();
     loadBadWords();
   }
@@ -155,6 +167,18 @@ public class SlashListener {
             case "traducirpdf":
               {
                 processPDF();
+                break;
+              }
+
+            case "rangos":
+              {
+                showRangos();
+                break;
+              }
+
+            case "ccpl":
+              {
+                showCcpl();
                 break;
               }
 
@@ -438,6 +462,228 @@ public class SlashListener {
             .setContent("Comando no reconocido.")
             .respond();
     }
+  }
+
+  /** Handles the "rangos" command. Lists the server members grouped by rank. */
+  public void showRangos() {
+    SlashCommandInteraction interaction = slashCommandInteraction;
+    Optional<Server> server = interaction.getServer();
+    if (server.isEmpty()) {
+      interaction
+          .createImmediateResponder()
+          .setContent("Este comando solo funciona dentro de un servidor")
+          .setFlags(MessageFlag.EPHEMERAL)
+          .respond();
+      return;
+    }
+
+    interaction
+        .respondLater()
+        .thenAccept(
+            updater -> {
+              try {
+                Map<String, List<User>> porRango = roleService.getMiembrosPorRango(server.get());
+                String out = formatRangos(server.get(), porRango);
+
+                // Discord messages are limited to 2000 characters
+                List<String> chunks = splitMessage(out, 2000);
+                updater.setContent(chunks.get(0)).update().join();
+                for (int i = 1; i < chunks.size(); i++) {
+                  interaction
+                      .createFollowupMessageBuilder()
+                      .setContent(chunks.get(i))
+                      .send()
+                      .join();
+                }
+              } catch (Exception e) {
+                e.printStackTrace();
+                updater.setContent("Ocurrió un error listando los rangos: " + e).update();
+              }
+            })
+        .exceptionally(
+            e -> {
+              System.err.println("/rangos: Discord rechazó la respuesta: " + e);
+              return null;
+            });
+  }
+
+  /** Arma el texto de /rangos: cada rango con la cantidad de miembros y sus nombres. */
+  private String formatRangos(Server server, Map<String, List<User>> porRango) {
+    StringBuilder out = new StringBuilder();
+    for (Map.Entry<String, List<User>> entry : porRango.entrySet()) {
+      out.append("**")
+          .append(entry.getKey())
+          .append("** (")
+          .append(entry.getValue().size())
+          .append(")\n");
+      for (User u : entry.getValue()) {
+        out.append("- ").append(u.getDisplayName(server)).append("\n");
+      }
+      out.append("\n");
+    }
+    return out.toString();
+  }
+
+  /** Handles the "ccpl" command. Shows the CCPL results of a university's teams. */
+  public void showCcpl() {
+    SlashCommandInteraction interaction = slashCommandInteraction;
+    String universidad =
+        interaction
+            .getArgumentStringValueByName("universidad")
+            .filter(u -> !u.isBlank())
+            .orElse("Universidad El Bosque");
+
+    interaction
+        .respondLater()
+        .thenAccept(
+            updater -> {
+              try {
+                BocaScoreUtil.Marcador marcador = BocaScoreUtil.getMarcador();
+                List<BocaScoreUtil.Equipo> equipos = marcador.deUniversidad(universidad);
+                if (equipos.isEmpty()) {
+                  updater
+                      .setContent(
+                          "No encontré equipos de **"
+                              + universidad
+                              + "** en el marcador de "
+                              + marcador.titulo()
+                              + ".")
+                      .update();
+                  return;
+                }
+
+                // Discord allows up to 10 embeds per message
+                List<EmbedBuilder> embeds = buildCcplEmbeds(marcador, equipos);
+                updater.addEmbeds(embeds.subList(0, Math.min(10, embeds.size()))).update();
+                for (int i = 10; i < embeds.size(); i += 10) {
+                  interaction
+                      .createFollowupMessageBuilder()
+                      .addEmbeds(embeds.subList(i, Math.min(i + 10, embeds.size())))
+                      .send();
+                }
+              } catch (Exception e) {
+                e.printStackTrace();
+                updater.setContent("No pude leer el marcador de BOCA: " + e.getMessage()).update();
+              }
+            })
+        .exceptionally(
+            e -> {
+              System.err.println("/ccpl: Discord rechazó la respuesta: " + e);
+              return null;
+            });
+  }
+
+  /** Arma los embeds de /ccpl: uno de encabezado y uno por equipo. */
+  private List<EmbedBuilder> buildCcplEmbeds(
+      BocaScoreUtil.Marcador marcador, List<BocaScoreUtil.Equipo> equipos) {
+    int total = marcador.equipos().size();
+    List<EmbedBuilder> embeds = new ArrayList<>();
+
+    embeds.add(
+        new EmbedBuilder()
+            .setTitle("🏆 " + marcador.titulo())
+            .setDescription(
+                "**"
+                    + equipos.get(0).universidad()
+                    + "**\n"
+                    + equipos.size()
+                    + (equipos.size() == 1 ? " equipo" : " equipos")
+                    + " de "
+                    + total
+                    + " en competencia"
+                    + (marcador.congelado() ? "\n🧊 *Marcador congelado*" : "")
+                    + "\n\n🟩 resuelto · 🟥 intentado · ⬛ sin envíos")
+            .setColor(new Color(0x1ABC9C))
+            .setFooter("Fuente: BOCA · " + BocaScoreUtil.BASE_URL.replace("http://", ""))
+            .setTimestampToNow());
+
+    String[] medallas = {"🥇", "🥈", "🥉"};
+    for (int n = 0; n < equipos.size(); n++) {
+      String medalla = n < medallas.length ? medallas[n] : "🎖️";
+      embeds.add(buildEquipoEmbed(marcador, equipos.get(n), medalla));
+    }
+    return embeds;
+  }
+
+  /** Arma el embed de un equipo con su puesto, totales, cuadricula y detalle de problemas. */
+  private EmbedBuilder buildEquipoEmbed(
+      BocaScoreUtil.Marcador marcador, BocaScoreUtil.Equipo e, String medalla) {
+    int total = marcador.equipos().size();
+    String puesto = "#" + e.puestoGlobal() + " / " + total;
+    if (e.puestoLocal() != null && e.puestoLocal() != e.puestoGlobal()) {
+      puesto += "\nlocal #" + e.puestoLocal();
+    }
+
+    return new EmbedBuilder()
+        .setTitle(medalla + " " + e.nombre())
+        .setColor(colorPorPuesto(e.puestoGlobal(), total))
+        .addInlineField("Puesto", puesto)
+        .addInlineField("Resueltos", e.resueltos() + " / " + marcador.letras().size())
+        .addInlineField("Penalidad", e.penalidad() + " min")
+        .addField("Problemas", cuadriculaProblemas(marcador.letras(), e))
+        .addField("Detalle", detalleProblemas(e))
+        .setFooter(e.usuario() + " · sede " + e.sede());
+  }
+
+  /** Fila con la letra de cada problema y debajo un cuadro con su estado. */
+  private String cuadriculaProblemas(List<String> letrasMarcador, BocaScoreUtil.Equipo e) {
+    Map<String, BocaScoreUtil.Problema> porLetra = new HashMap<>();
+    e.problemas().forEach(p -> porLetra.put(p.letra(), p));
+
+    StringBuilder letras = new StringBuilder();
+    StringBuilder estados = new StringBuilder();
+    for (String letra : letrasMarcador) {
+      BocaScoreUtil.Problema p = porLetra.get(letra);
+      letras.append(Character.toChars(0x1F1E6 + letra.charAt(0) - 'A')).append(' ');
+      if (p == null) {
+        estados.append("⬛ ");
+      } else {
+        estados.append(p.resuelto() ? "🟩 " : "🟥 ");
+      }
+    }
+    return letras.toString().trim() + "\n" + estados.toString().trim();
+  }
+
+  /** Una linea por problema intentado con los intentos y el minuto en que se resolvio. */
+  private String detalleProblemas(BocaScoreUtil.Equipo e) {
+    if (e.problemas().isEmpty()) return "Todavía sin envíos";
+
+    StringBuilder detalle = new StringBuilder();
+    for (BocaScoreUtil.Problema p : e.problemas()) {
+      detalle
+          .append(p.resuelto() ? "✅ **" : "❌ **")
+          .append(p.letra())
+          .append("** · ")
+          .append(p.intentos())
+          .append(p.intentos() == 1 ? " intento" : " intentos");
+      if (p.resuelto()) detalle.append(" · minuto ").append(p.minuto());
+      detalle.append("\n");
+    }
+    return detalle.toString();
+  }
+
+  /** Dorado top 10%, verde primer tercio, azul segundo tercio, gris el resto. */
+  private Color colorPorPuesto(int puesto, int total) {
+    double percentil = (double) puesto / total;
+    if (percentil <= 0.10) return new Color(0xF1C40F);
+    if (percentil <= 0.33) return new Color(0x2ECC71);
+    if (percentil <= 0.66) return new Color(0x3498DB);
+    return new Color(0x95A5A6);
+  }
+
+  /** Parte un texto en mensajes de maximo limit caracteres, cortando en saltos de linea. */
+  private List<String> splitMessage(String text, int limit) {
+    List<String> chunks = new ArrayList<>();
+    StringBuilder current = new StringBuilder();
+    for (String line : text.split("\n")) {
+      if (current.length() + line.length() + 1 > limit && current.length() > 0) {
+        chunks.add(current.toString());
+        current.setLength(0);
+      }
+      current.append(line, 0, Math.min(line.length(), limit - 1)).append("\n");
+    }
+    if (current.length() > 0 || chunks.isEmpty()) chunks.add(current.toString());
+    return chunks;
   }
 
   /**
