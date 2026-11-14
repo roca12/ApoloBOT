@@ -3,6 +3,7 @@ package com.roca12.apolobot.util;
 import java.text.Normalizer;
 import java.util.Locale;
 
+/** Utilidades para comparar textos escritos por personas. */
 public class TextUtil {
 
   /** Quita tildes, pasa a minusculas y une las palabras con "_" para poder comparar nombres */

@@ -15,12 +15,14 @@ public class RoleService {
   public static final List<String> RANGOS =
       List.of("Élite", "Avanzada", "Intermedia", "Básica", "Aprendiz");
 
+  /** Rangos que tiene el usuario en el servidor, en el orden de RANGOS. */
   public List<String> getRangos(User user, Server server) {
     List<String> roles =
         user.getRoles(server).stream().map(r -> TextUtil.normalizar(r.getName())).toList();
     return RANGOS.stream().filter(r -> roles.contains(TextUtil.normalizar(r))).toList();
   }
 
+  /** Miembros del servidor agrupados por rango. Alguien con varios rangos sale en cada uno. */
   public Map<String, List<User>> getMiembrosPorRango(Server server) {
     Map<String, List<User>> porRango = new LinkedHashMap<>();
     RANGOS.forEach(r -> porRango.put(r, new ArrayList<>()));

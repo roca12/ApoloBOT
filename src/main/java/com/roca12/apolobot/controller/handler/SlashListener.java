@@ -507,6 +507,7 @@ public class SlashListener {
             });
   }
 
+  /** Arma el texto de /rangos: cada rango con la cantidad de miembros y sus nombres. */
   private String formatRangos(Server server, Map<String, List<User>> porRango) {
     StringBuilder out = new StringBuilder();
     for (Map.Entry<String, List<User>> entry : porRango.entrySet()) {
@@ -572,7 +573,7 @@ public class SlashListener {
             });
   }
 
-  // Un embed de encabezado y uno por equipo
+  /** Arma los embeds de /ccpl: uno de encabezado y uno por equipo. */
   private List<EmbedBuilder> buildCcplEmbeds(
       BocaScoreUtil.Marcador marcador, List<BocaScoreUtil.Equipo> equipos) {
     int total = marcador.equipos().size();
@@ -598,51 +599,70 @@ public class SlashListener {
 
     String[] medallas = {"🥇", "🥈", "🥉"};
     for (int n = 0; n < equipos.size(); n++) {
-      BocaScoreUtil.Equipo e = equipos.get(n);
-      Map<String, BocaScoreUtil.Problema> porLetra = new HashMap<>();
-      e.problemas().forEach(p -> porLetra.put(p.letra(), p));
-
-      // fila de letras y debajo el estado de cada problema
-      StringBuilder letras = new StringBuilder();
-      StringBuilder estados = new StringBuilder();
-      for (String letra : marcador.letras()) {
-        BocaScoreUtil.Problema p = porLetra.get(letra);
-        letras.append(Character.toChars(0x1F1E6 + letra.charAt(0) - 'A')).append(' ');
-        estados.append(p == null ? "⬛" : p.resuelto() ? "🟩" : "🟥").append(' ');
-      }
-
-      StringBuilder detalle = new StringBuilder();
-      for (BocaScoreUtil.Problema p : e.problemas()) {
-        detalle
-            .append(p.resuelto() ? "✅ **" : "❌ **")
-            .append(p.letra())
-            .append("** · ")
-            .append(p.intentos())
-            .append(p.intentos() == 1 ? " intento" : " intentos");
-        if (p.resuelto()) detalle.append(" · minuto ").append(p.minuto());
-        detalle.append("\n");
-      }
-
-      String puesto = "#" + e.puestoGlobal() + " / " + total;
-      if (e.puestoLocal() != null && e.puestoLocal() != e.puestoGlobal()) {
-        puesto += "\nlocal #" + e.puestoLocal();
-      }
-
-      embeds.add(
-          new EmbedBuilder()
-              .setTitle((n < medallas.length ? medallas[n] : "🎖️") + " " + e.nombre())
-              .setColor(colorPorPuesto(e.puestoGlobal(), total))
-              .addInlineField("Puesto", puesto)
-              .addInlineField("Resueltos", e.resueltos() + " / " + marcador.letras().size())
-              .addInlineField("Penalidad", e.penalidad() + " min")
-              .addField("Problemas", letras.toString().trim() + "\n" + estados.toString().trim())
-              .addField("Detalle", detalle.length() > 0 ? detalle.toString() : "Todavía sin envíos")
-              .setFooter(e.usuario() + " · sede " + e.sede()));
+      String medalla = n < medallas.length ? medallas[n] : "🎖️";
+      embeds.add(buildEquipoEmbed(marcador, equipos.get(n), medalla));
     }
     return embeds;
   }
 
-  // dorado top 10%, verde primer tercio, azul segundo tercio, gris el resto
+  /** Arma el embed de un equipo con su puesto, totales, cuadricula y detalle de problemas. */
+  private EmbedBuilder buildEquipoEmbed(
+      BocaScoreUtil.Marcador marcador, BocaScoreUtil.Equipo e, String medalla) {
+    int total = marcador.equipos().size();
+    String puesto = "#" + e.puestoGlobal() + " / " + total;
+    if (e.puestoLocal() != null && e.puestoLocal() != e.puestoGlobal()) {
+      puesto += "\nlocal #" + e.puestoLocal();
+    }
+
+    return new EmbedBuilder()
+        .setTitle(medalla + " " + e.nombre())
+        .setColor(colorPorPuesto(e.puestoGlobal(), total))
+        .addInlineField("Puesto", puesto)
+        .addInlineField("Resueltos", e.resueltos() + " / " + marcador.letras().size())
+        .addInlineField("Penalidad", e.penalidad() + " min")
+        .addField("Problemas", cuadriculaProblemas(marcador.letras(), e))
+        .addField("Detalle", detalleProblemas(e))
+        .setFooter(e.usuario() + " · sede " + e.sede());
+  }
+
+  /** Fila con la letra de cada problema y debajo un cuadro con su estado. */
+  private String cuadriculaProblemas(List<String> letrasMarcador, BocaScoreUtil.Equipo e) {
+    Map<String, BocaScoreUtil.Problema> porLetra = new HashMap<>();
+    e.problemas().forEach(p -> porLetra.put(p.letra(), p));
+
+    StringBuilder letras = new StringBuilder();
+    StringBuilder estados = new StringBuilder();
+    for (String letra : letrasMarcador) {
+      BocaScoreUtil.Problema p = porLetra.get(letra);
+      letras.append(Character.toChars(0x1F1E6 + letra.charAt(0) - 'A')).append(' ');
+      if (p == null) {
+        estados.append("⬛ ");
+      } else {
+        estados.append(p.resuelto() ? "🟩 " : "🟥 ");
+      }
+    }
+    return letras.toString().trim() + "\n" + estados.toString().trim();
+  }
+
+  /** Una linea por problema intentado con los intentos y el minuto en que se resolvio. */
+  private String detalleProblemas(BocaScoreUtil.Equipo e) {
+    if (e.problemas().isEmpty()) return "Todavía sin envíos";
+
+    StringBuilder detalle = new StringBuilder();
+    for (BocaScoreUtil.Problema p : e.problemas()) {
+      detalle
+          .append(p.resuelto() ? "✅ **" : "❌ **")
+          .append(p.letra())
+          .append("** · ")
+          .append(p.intentos())
+          .append(p.intentos() == 1 ? " intento" : " intentos");
+      if (p.resuelto()) detalle.append(" · minuto ").append(p.minuto());
+      detalle.append("\n");
+    }
+    return detalle.toString();
+  }
+
+  /** Dorado top 10%, verde primer tercio, azul segundo tercio, gris el resto. */
   private Color colorPorPuesto(int puesto, int total) {
     double percentil = (double) puesto / total;
     if (percentil <= 0.10) return new Color(0xF1C40F);
@@ -651,7 +671,7 @@ public class SlashListener {
     return new Color(0x95A5A6);
   }
 
-  // Discord no deja mandar mas de 2000 caracteres por mensaje
+  /** Parte un texto en mensajes de maximo limit caracteres, cortando en saltos de linea. */
   private List<String> splitMessage(String text, int limit) {
     List<String> chunks = new ArrayList<>();
     StringBuilder current = new StringBuilder();
